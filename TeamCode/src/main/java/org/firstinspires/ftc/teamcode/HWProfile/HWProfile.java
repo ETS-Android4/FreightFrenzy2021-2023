@@ -45,6 +45,10 @@ public class HWProfile
     public BNO055IMU imu = null;
 
 
+    final public double TICKSPERROTATION = 30;
+    final public double DISTANCEPERROTATION = 4; // assuming inches
+
+
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -60,10 +64,10 @@ public class HWProfile
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        motorLF  = hwMap.get(DcMotor.class, "motorLF");
+        motorLF = hwMap.get(DcMotor.class, "motorLF");
         motorLR = hwMap.get(DcMotor.class, "motorLR");
-        motorRF    = hwMap.get(DcMotor.class, "motorRF");
-        motorRR    = hwMap.get(DcMotor.class, "motorRR");
+        motorRF = hwMap.get(DcMotor.class, "motorRF");
+        motorRR = hwMap.get(DcMotor.class, "motorRR");
         motorLF.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         motorLR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         motorRF.setDirection(DcMotor.Direction.FORWARD);

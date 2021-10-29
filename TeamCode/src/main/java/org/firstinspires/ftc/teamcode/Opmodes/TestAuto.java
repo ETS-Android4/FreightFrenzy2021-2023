@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.robot.RobotState;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMechanum;
@@ -22,7 +20,7 @@ public class TestAuto extends LinearOpMode {
     }   // end of TestAuto constructor
 
     public void runOpMode(){
-        telemetry.addData("Robot State = ", "NOT READY");
+        telemetry.addData("Robot State = ", "READY");
         telemetry.update();
 
         /*
@@ -46,7 +44,7 @@ public class TestAuto extends LinearOpMode {
     waitForStart();
 
     if(opModeIsActive()){
-        drive.robotCorrect(0.20, 90, 10);
+        drive.driveTime(0.20, 0, 10);
         drive.motorsHalt();
     }   // end of if opModeIsActive()
 
