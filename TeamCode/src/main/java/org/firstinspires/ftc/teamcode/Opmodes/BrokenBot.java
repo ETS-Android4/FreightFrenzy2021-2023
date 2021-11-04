@@ -12,7 +12,7 @@ public class BrokenBot extends LinearOpMode{
 
 
     /* Declare OpMode members. */
-        HWProfile robot           = new HWProfile();   // Use a Pushbot's hardware
+        HWProfile robot           = new HWProfile();
 
         @Override
         public void runOpMode() {
