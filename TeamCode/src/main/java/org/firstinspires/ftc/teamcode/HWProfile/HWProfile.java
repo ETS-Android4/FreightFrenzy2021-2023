@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.HWProfile;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,6 +14,7 @@ public class HWProfile {
     public DcMotor  motorLR  = null;
     public DcMotor  motorRF     = null;
     public DcMotor  motorRR    = null;
+    public DcMotor  motorDuck = null;
     public BNO055IMU imu = null;
 
 
@@ -39,10 +41,12 @@ public class HWProfile {
         motorLR = hwMap.get(DcMotor.class, "motorLR");
         motorRF = hwMap.get(DcMotor.class, "motorRF");
         motorRR = hwMap.get(DcMotor.class, "motorRR");
-        motorLF.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        motorLR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        motorDuck = hwMap.get(DcMotor.class, "motorDuck");
+        motorLF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        motorLR.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         motorRF.setDirection(DcMotor.Direction.FORWARD);
         motorRR.setDirection(DcMotor.Direction.FORWARD);
+
 
         // Set all motors to zero power
         motorLF.setPower(0);
