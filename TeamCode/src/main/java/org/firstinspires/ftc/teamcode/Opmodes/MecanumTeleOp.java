@@ -108,9 +108,9 @@ public class MecanumTeleOp extends LinearOpMode {
                 }   // end if (gamepad1.x && ...)
 
                 if (gamepad1.left_bumper) {
-                    robot.motorDuck.setPower(.25);
+                    robot.motorDuck.setPower(1);
                 } else if (gamepad1.right_bumper) {
-                    robot.motorDuck.setPower(-.25);
+                    robot.motorDuck.setPower(-1);
                 } else {
                     robot.motorDuck.setPower(0);
             }

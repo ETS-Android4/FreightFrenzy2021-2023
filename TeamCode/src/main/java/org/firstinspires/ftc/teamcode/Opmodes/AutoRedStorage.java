@@ -3,22 +3,19 @@ package org.firstinspires.ftc.teamcode.Opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMechanum;
 
-import java.util.List;
-
-@Autonomous(name = "Blue Storage", group = "Programming Class")
+@Autonomous(name = "Red Storage", group = "Programming Class")
 //@Disabled
 
-public class AutoBlueStorage extends LinearOpMode {
+public class AutoRedStorage extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
     private State state = State.RUN1;
 
-    public AutoBlueStorage() {
+    public AutoRedStorage() {
 
     }   // end of TestAuto constructor
 
@@ -54,22 +51,24 @@ public class AutoBlueStorage extends LinearOpMode {
 
                 case RUN1:
                     // straffe away from the wall
-                    drive.driveTime(.5, -90, 0.5);
+                    drive.driveTime(.5, -90, 0.38);
 
                     sleep(500);
 
                     // drive towards the turntable
-                    drive.driveTime(0.5, 0, 1.5);
+                    drive.driveTime(0.2, 180, 3);
 
-                    drive.driveTime(.1, 90, .25);
+                    drive.driveTime(.1,90,1);
 
                     // turn duck motor on
-                    robot.motorDuck.setPower(.8);
+                    robot.motorDuck.setPower(-.8);
+
                     sleep(5000);
+                    drive.motorsHalt();
                     robot.motorDuck.setPower(0);
 
                     // park in storage
-                    drive.driveTime(.5, -90, 1.15);
+                    drive.driveTime(.5, -90, 1.25);
 
                     
 
