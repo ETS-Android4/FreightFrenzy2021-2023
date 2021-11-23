@@ -18,6 +18,8 @@ public class HWProfile {
     public DcMotor  motorDuck = null;
     public BNO055IMU imu = null;
 
+    public final double duckSpeed=0.6;
+    public final int autoSleepTime=10000;
 
     final public double TICKSPERROTATION = 30;
     final public double DISTANCEPERROTATION = 4; // assuming inches

@@ -50,7 +50,7 @@ public class AutoRedStorage extends LinearOpMode {
                     break;
 
                 case RUN1:
-                    // straffe away from the wall
+                    // strafe away from the wall
                     drive.driveTime(.5, -90, 0.38);
 
                     sleep(500);
@@ -61,9 +61,9 @@ public class AutoRedStorage extends LinearOpMode {
                     drive.driveTime(.1,90,1);
 
                     // turn duck motor on
-                    robot.motorDuck.setPower(-.8);
+                    robot.motorDuck.setPower(-robot.duckSpeed);
 
-                    sleep(5000);
+                    sleep(robot.autoSleepTime);
                     drive.motorsHalt();
                     robot.motorDuck.setPower(0);
 
