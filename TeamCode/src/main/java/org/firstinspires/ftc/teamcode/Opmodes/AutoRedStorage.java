@@ -4,10 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
-import org.firstinspires.ftc.teamcode.Libs.DriveMechanum;
+import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Red Storage", group = "Programming Class")
-//@Disabled
+@Autonomous(name = "Red Storage", group = "Competition")
 
 public class AutoRedStorage extends LinearOpMode {
 
@@ -31,7 +30,7 @@ public class AutoRedStorage extends LinearOpMode {
         /*
          * Initialize the drive class
          */
-        DriveMechanum drive = new DriveMechanum(robot, opMode);
+        DriveMecanum drive = new DriveMecanum(robot, opMode);
 
         /*
          * Calibrate / initialize the game sensor
@@ -100,4 +99,4 @@ public class AutoRedStorage extends LinearOpMode {
         TEST, RUN1, PARK, HALT;
     }   // end of enum State
 
-}
+}   // end of class AutoRedStorage

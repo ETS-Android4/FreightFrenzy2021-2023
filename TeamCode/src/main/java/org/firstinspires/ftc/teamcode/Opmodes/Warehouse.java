@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
-import org.firstinspires.ftc.teamcode.Libs.DriveMechanum;
+import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Warehouse", group = "Programming Class")
+@Autonomous(name = "Warehouse", group = "Competition")
 //@Disabled
 
 
@@ -31,7 +31,7 @@ public class Warehouse extends LinearOpMode {
         /*
          * Initialize the drive class
          */
-        DriveMechanum drive = new DriveMechanum(robot, opMode);
+        DriveMecanum drive = new DriveMecanum(robot, opMode);
 
         /*
          * Calibrate / initialize the game sensor

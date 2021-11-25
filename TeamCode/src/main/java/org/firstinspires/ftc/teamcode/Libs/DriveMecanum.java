@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 
-public class DriveMechanum {
+public class DriveMecanum {
 
     private HWProfile robot;
     public double RF, LF, LR, RR;
@@ -14,9 +14,9 @@ public class DriveMechanum {
     /*
      * Constructor method
      */
-    public DriveMechanum(HWProfile myRobot, LinearOpMode myOpMode){
-       robot = myRobot;
-       opMode = myOpMode;
+    public DriveMecanum(HWProfile myRobot, LinearOpMode myOpMode){
+        robot = myRobot;
+        opMode = myOpMode;
     }  // closes DriveMechanum constructor Method
 
     public void driveTime(double power, double heading, double duration) {
@@ -337,6 +337,3 @@ public class DriveMechanum {
     }   // close updateValues method
 
 }
-
-
-

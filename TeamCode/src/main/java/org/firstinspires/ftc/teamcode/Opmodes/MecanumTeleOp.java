@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
-import org.firstinspires.ftc.teamcode.Libs.DriveMechanum;
+import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@TeleOp(name = "Teleop Mode", group = "Mouse Spit")
+@TeleOp(name = "Teleop Mode", group = "Competition")
 
 public class MecanumTeleOp extends LinearOpMode {
         private final static HWProfile robot = new HWProfile();
@@ -35,7 +35,7 @@ public class MecanumTeleOp extends LinearOpMode {
             /*
              * Initialize the drive class
              */
-            DriveMechanum drive = new DriveMechanum(robot, opMode);
+            DriveMecanum drive = new DriveMecanum(robot, opMode);
 
             waitForStart();
 

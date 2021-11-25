@@ -3,14 +3,10 @@ package org.firstinspires.ftc.teamcode.Opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
-import org.firstinspires.ftc.teamcode.Libs.DriveMechanum;
+import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-import java.util.List;
-
-@Autonomous(name = "Blue Storage", group = "Programming Class")
-//@Disabled
+@Autonomous(name = "Blue Storage", group = "Competition")
 
 public class AutoBlueStorage extends LinearOpMode {
 
@@ -34,7 +30,7 @@ public class AutoBlueStorage extends LinearOpMode {
         /*
          * Initialize the drive class
          */
-        DriveMechanum drive = new DriveMechanum(robot, opMode);
+        DriveMecanum drive = new DriveMecanum(robot, opMode);
 
         /*
          * Calibrate / initialize the game sensor
@@ -49,6 +45,10 @@ public class AutoBlueStorage extends LinearOpMode {
         if (opModeIsActive()) {
             switch (state) {
                 case TEST:
+
+                    break;
+
+                case PLACE_SE:
 
                     break;
 
@@ -70,8 +70,6 @@ public class AutoBlueStorage extends LinearOpMode {
 
                     // park in storage
                     drive.driveTime(.5, -90, 1.15);
-
-                    
 
                     state = State.HALT;
 
@@ -98,7 +96,7 @@ public class AutoBlueStorage extends LinearOpMode {
     }// end of runOpMode constructor
 
     enum State {
-        TEST, RUN1, PARK, HALT;
+        TEST, PLACE_SE, RUN1, PARK, HALT;
     }   // end of enum State
 
-}
+}   // end of class AutoBlueStorage
