@@ -10,9 +10,12 @@ import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 
 public class BrokenBot extends LinearOpMode{
 
+    public double lfValue = 0, lrValue = 0, rfValue = 0, rrValue = 0;
 
     /* Declare OpMode members. */
         HWProfile robot           = new HWProfile();
+        public double servoPosition = 0;
+        public double robotAngle, rightX, rightY, v1, v2, v3, v4, theta, theta2, r;
 
         @Override
         public void runOpMode() {
@@ -32,6 +35,22 @@ public class BrokenBot extends LinearOpMode{
 
             // run until the end of the match (driver presses STOP)
             while (opModeIsActive()) {
+
+
+                robotAngle = Math.atan2(gamepad1.left_stick_y, (-gamepad1.left_stick_x)) - Math.PI / 4;
+                rightX = gamepad1.right_stick_x;
+                rightY = -gamepad1.right_stick_y;
+                r = -Math.hypot(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+
+                v1 = (r * Math.cos(robotAngle - Math.toRadians(theta + theta2)) + rightX + rightY);
+                v2 = (r * Math.sin(robotAngle - Math.toRadians(theta + theta2)) - rightX + rightY);
+                v3 = (r * Math.sin(robotAngle - Math.toRadians(theta + theta2)) + rightX + rightY);
+                v4 = (r * Math.cos(robotAngle - Math.toRadians(theta + theta2)) - rightX + rightY);
+
+                robot.motorLF.setPower(com.qualcomm.robotcore.util.Range.clip((v1 + lfValue), -1, 1));
+                robot.motorRF.setPower(com.qualcomm.robotcore.util.Range.clip((v2 + rfValue), -1, 1));
+                robot.motorLR.setPower(com.qualcomm.robotcore.util.Range.clip((v3 + lrValue), -1, 1));
+                robot.motorRR.setPower(com.qualcomm.robotcore.util.Range.clip((v4 + rrValue), -1, 1));
 
                 if (gamepad2.dpad_down) {
                     robot.motorLF.setPower(1);
@@ -54,6 +73,26 @@ public class BrokenBot extends LinearOpMode{
                 }else robot.motorRR.setPower(0);
 
 
+                if(gamepad2.left_trigger >0){
+                    servoPosition = servoPosition + 0.005;
+                    if(servoPosition >1) servoPosition = 1;
+                }  else if(gamepad2.right_trigger >0 ) {
+                    servoPosition = servoPosition - 0.005;
+                    if(servoPosition < -1) servoPosition = -1;
+                }   // end if
+
+                robot.servoIntake.setPosition(servoPosition);
+
+                if (gamepad2.a){
+                    robot.motorIntake.setPower(1);
+                } else {
+                    robot.motorIntake.setPower(0);
+                }
+                if(Math.abs(gamepad2.right_stick_y) > 0.1){
+                    robot.motorArm.setPower(gamepad2.right_stick_y * 0.5);
+                }   else {
+                    robot.motorArm.setPower(0);
+                }   // end if
 
                 // Send telemetry message to signify robot running;
                 telemetry.addData("motorRF",  robot.motorRF.getCurrentPosition());
@@ -65,5 +104,3 @@ public class BrokenBot extends LinearOpMode{
             } // end of while loop
         } // end of runOpMode
     } // end of LinearOpMode
-
-
