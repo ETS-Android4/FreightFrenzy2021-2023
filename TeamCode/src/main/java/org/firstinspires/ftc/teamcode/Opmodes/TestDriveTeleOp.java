@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 public class TestDriveTeleOp extends LinearOpMode {
     /* Public OpMode members. */
     public HWProfile robot = new HWProfile();
-    private ElapsedTime period = new ElapsedTime();
     public double drive;
     public double turn;
     public double left;

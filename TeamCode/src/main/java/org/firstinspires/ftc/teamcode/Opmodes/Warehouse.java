@@ -4,20 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
-import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
 @Autonomous(name = "Warehouse", group = "Competition")
 //@Disabled
 
-
 public class Warehouse extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
-    private LinearOpMode opMode = this;
-
-    public Warehouse(){
-
-    }   // end of TestAuto constructor
 
     public void runOpMode(){
         telemetry.addData("Robot State = ", "READY");
@@ -28,31 +21,22 @@ public class Warehouse extends LinearOpMode {
          */
         robot.init(hardwareMap);
 
-        /*
-         * Initialize the drive class
-         */
-        DriveMecanum drive = new DriveMecanum(robot, opMode);
+        telemetry.addData("Robot state = ", "INITIALIZED");
+        telemetry.update();
 
-        /*
-         * Calibrate / initialize the game sensor
-         */
+        waitForStart();
 
-    telemetry.addData("Robot state = ", "INITIALIZED");
-    telemetry.update();
-
-    waitForStart();
-
-    if(opModeIsActive()){
-        robot.motorLF.setPower(1);
-        robot.motorRF.setPower(1);
-        robot.motorLR.setPower(1);
-        robot.motorRR.setPower(1);
-        sleep(1000);
-        robot.motorLF.setPower(0);
-        robot.motorRF.setPower(0);
-        robot.motorLR.setPower(0);
-        robot.motorRR.setPower(0);
-    }   // end of if opModeIsActive()
+        if(opModeIsActive()){
+            robot.motorLF.setPower(1);
+            robot.motorRF.setPower(1);
+            robot.motorLR.setPower(1);
+            robot.motorRR.setPower(1);
+            sleep(1000);
+            robot.motorLF.setPower(0);
+            robot.motorRF.setPower(0);
+            robot.motorLR.setPower(0);
+            robot.motorRR.setPower(0);
+        }   // end of if opModeIsActive()
 
     }// end of runOpMode constructor
 }
