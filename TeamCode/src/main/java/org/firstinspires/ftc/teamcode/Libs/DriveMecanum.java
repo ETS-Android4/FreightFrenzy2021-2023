@@ -17,7 +17,7 @@ public class DriveMecanum {
     public DriveMecanum(HWProfile myRobot, LinearOpMode myOpMode){
         robot = myRobot;
         opMode = myOpMode;
-    }  // closes DriveMechanum constructor Method
+    }  // closes DriveMecanum constructor Method
 
     public void driveTime(double power, double heading, double duration) {
         double initZ = getZAngle();
@@ -105,7 +105,7 @@ public class DriveMecanum {
             } // end of if current != initZ
 
             /*
-             * Limit the value of the drive motors so that the power does not acceed 100%
+             * Limit the value of the drive motors so that the power does not exceed 100%
              */
             if(RF > 1) RF = 1;
             else if (RF < -1) RF = -1;
