@@ -19,6 +19,7 @@ public class MecanumTeleOp extends LinearOpMode {
             double r;
             double rightX, rightY;
             boolean fieldCentric = false;
+            double servoPosition = 0;
 
             ElapsedTime currentTime= new ElapsedTime();
             double buttonPress = currentTime.time();
@@ -73,6 +74,33 @@ public class MecanumTeleOp extends LinearOpMode {
                 } else {
                     robot.motorDuck.setPower(0);
                 }   // end of if(gamepad1.left_bumper)
+
+               /* if(gamepad2.left_trigger >0){
+                    servoPosition = servoPosition + 0.005;
+                    if(servoPosition >1) servoPosition = .1;
+                }  else if(gamepad2.right_trigger >0 ) {
+                    servoPosition = servoPosition - 0.005;
+                    if(servoPosition < -1) servoPosition = -.1;
+                }   // end if
+                */
+                if(gamepad2.left_trigger>0){
+                    servoPosition= 0.5;
+                }else{
+                    servoPosition= 0;
+                }
+
+                robot.servoIntake.setPosition(servoPosition);
+
+                if (gamepad2.a){
+                    robot.motorIntake.setPower(0.75);
+                } else {
+                    robot.motorIntake.setPower(0);
+                }
+                if(Math.abs(gamepad2.right_stick_y) > 0.1){
+                    robot.motorArm.setPower(gamepad2.right_stick_y * 0.5);
+                }   else {
+                    robot.motorArm.setPower(0);
+                }   // end if
 
                 // make sure that button press is limited to once every 0.3 seconds
 
