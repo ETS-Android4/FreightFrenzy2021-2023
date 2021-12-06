@@ -35,8 +35,8 @@ public class BrokenBot extends LinearOpMode{
 
             // run until the end of the match (driver presses STOP)
             while (opModeIsActive()) {
-
-
+                telemetry.addData("Arm angle",robot.motorArm.getCurrentPosition());
+                telemetry.update();
                 robotAngle = Math.atan2(gamepad1.left_stick_y, (-gamepad1.left_stick_x)) - Math.PI / 4;
                 rightX = gamepad1.right_stick_x;
                 rightY = -gamepad1.right_stick_y;
@@ -95,11 +95,6 @@ public class BrokenBot extends LinearOpMode{
                 }   // end if
 
                 // Send telemetry message to signify robot running;
-                telemetry.addData("motorRF",  robot.motorRF.getCurrentPosition());
-                telemetry.addData("motorLF", robot.motorLF.getCurrentPosition());
-                telemetry.addData("motorLR", robot.motorLR.getCurrentPosition());
-                telemetry.addData("motorRR", robot.motorRR.getCurrentPosition());
-                telemetry.update();
 
             } // end of while loop
         } // end of runOpMode

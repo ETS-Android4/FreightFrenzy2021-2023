@@ -19,6 +19,7 @@ public class MecanumTeleOp extends LinearOpMode {
             double r;
             double rightX, rightY;
             boolean fieldCentric = false;
+            int targetPostion = 0;
 
             ElapsedTime currentTime= new ElapsedTime();
             double buttonPress = currentTime.time();
@@ -27,6 +28,9 @@ public class MecanumTeleOp extends LinearOpMode {
 
             telemetry.addData("Ready to Run: ","GOOD LUCK");
             telemetry.update();
+
+            boolean armReady=false;
+            boolean armDeployed=false;
 
             waitForStart();
 
@@ -73,6 +77,33 @@ public class MecanumTeleOp extends LinearOpMode {
                 } else {
                     robot.motorDuck.setPower(0);
                 }   // end of if(gamepad1.left_bumper)
+
+                if(gamepad2.right_trigger>0.2){
+                    robot.servoIntake.setPosition(1);
+                }else{
+                    if(robot.motorArm.getCurrentPosition()>100){
+                        robot.servoIntake.setPosition(0.25);
+                    }else{
+                        robot.servoIntake.setPosition(0);
+                    }
+                }
+
+                armDeployed=true;
+                robot.motorArm.setTargetPosition(targetPostion);
+                robot.motorArm.setPower(0.5);
+                if(armDeployed){
+                    robot.servoIntake.setPosition(0.25);
+                    targetPostion = -1375;
+                }else{
+                    robot.servoIntake.setPosition(0);
+                    targetPostion = 0;
+                }
+
+                if(gamepad2.a){
+                    robot.motorIntake.setPower(1);
+                }else{
+                    robot.motorIntake.setPower(0);
+                }
 
                 // make sure that button press is limited to once every 0.3 seconds
 

@@ -64,6 +64,8 @@ public class HWProfile {
         motorArm.setPower(0);
         motorDuck.setPower(0);
         motorIntake.setPower(0);
+        motorIntake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Set all motors to zero power
         motorLF.setPower(0);
