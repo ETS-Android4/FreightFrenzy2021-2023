@@ -56,12 +56,11 @@ public class HWProfile {
         motorRF.setDirection(DcMotor.Direction.FORWARD);
         motorRR.setDirection(DcMotor.Direction.FORWARD);
         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        motorLF.setPower(0);
-        motorLR.setPower(0);
+        motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorArm.setTargetPosition(0);
+        motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorRF.setPower(0);
         motorRR.setPower(0);
-        motorArm.setPower(0);
         motorDuck.setPower(0);
         motorIntake.setPower(0);
         motorIntake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

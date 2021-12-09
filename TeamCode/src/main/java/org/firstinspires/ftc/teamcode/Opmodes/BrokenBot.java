@@ -93,7 +93,12 @@ public class BrokenBot extends LinearOpMode{
                 }   else {
                     robot.motorArm.setPower(0);
                 }   // end if
-
+                telemetry.addData("ArmEncoder", robot.motorArm.getCurrentPosition());
+                telemetry.addData("motorRF", robot.motorRF.getCurrentPosition());
+                telemetry.addData("motorLF", robot.motorLF.getCurrentPosition());
+                telemetry.addData("motorRR", robot.motorRR.getCurrentPosition());
+                telemetry.addData("motorLR", robot.motorLR.getCurrentPosition());
+                telemetry.update();
                 // Send telemetry message to signify robot running;
 
             } // end of while loop

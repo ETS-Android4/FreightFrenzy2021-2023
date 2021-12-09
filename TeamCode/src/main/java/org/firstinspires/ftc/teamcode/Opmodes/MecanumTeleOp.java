@@ -19,13 +19,15 @@ public class MecanumTeleOp extends LinearOpMode {
             double r;
             double rightX, rightY;
             boolean fieldCentric = false;
-            int targetPostion = 0;
+            int targetPosition = 0;
+            double cupPosition = 0;
 
             ElapsedTime currentTime= new ElapsedTime();
             double buttonPress = currentTime.time();
 
             robot.init(hardwareMap);
 
+            robot.motorArm.setTargetPosition(0);
             telemetry.addData("Ready to Run: ","GOOD LUCK");
             telemetry.update();
 
@@ -82,25 +84,35 @@ public class MecanumTeleOp extends LinearOpMode {
                     robot.servoIntake.setPosition(1);
                 }else{
                     if(robot.motorArm.getCurrentPosition()>100){
-                        robot.servoIntake.setPosition(0.25);
+                        robot.servoIntake.setPosition(0.1);
                     }else{
                         robot.servoIntake.setPosition(0);
                     }
                 }
 
-                armDeployed=true;
-                robot.motorArm.setTargetPosition(targetPostion);
-                robot.motorArm.setPower(0.5);
-                if(armDeployed){
-                    robot.servoIntake.setPosition(0.25);
-                    targetPostion = -1375;
-                }else{
-                    robot.servoIntake.setPosition(0);
-                    targetPostion = 0;
+                if(gamepad1.dpad_down || gamepad2.dpad_down) {
+                    targetPosition = 0;
+                    cupPosition= 0.05;
+                } else if(gamepad1.dpad_right || gamepad2.dpad_right){
+                    targetPosition = -490;
+                    cupPosition = 0.25;
+                }else if(gamepad1.dpad_up || gamepad2.dpad_up){
+                    targetPosition = -1400;
+                    cupPosition = 0.1;
                 }
 
+                if(gamepad1.left_bumper || gamepad2.left_bumper){
+                    cupPosition = 0.1;
+                } else if(gamepad1.right_bumper || gamepad2.right_bumper){
+                    cupPosition = 0.5;
+                }
+                robot.servoIntake.setPosition(cupPosition);
+                sleep(50);
+                robot.motorArm.setTargetPosition(targetPosition);
+                robot.motorArm.setPower(-0.5);
+
                 if(gamepad2.a){
-                    robot.motorIntake.setPower(1);
+                    robot.motorIntake.setPower(.75);
                 }else{
                     robot.motorIntake.setPower(0);
                 }
