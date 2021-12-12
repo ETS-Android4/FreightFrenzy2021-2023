@@ -16,6 +16,8 @@ public class BrokenBot extends LinearOpMode{
         HWProfile robot           = new HWProfile();
         public double servoPosition = 0;
         public double robotAngle, rightX, rightY, v1, v2, v3, v4, theta, theta2, r;
+        public int targetPosition=0;
+        public double cupPosition=0;
 
         @Override
         public void runOpMode() {
@@ -32,6 +34,7 @@ public class BrokenBot extends LinearOpMode{
 
             // Wait for the game to start (driver presses PLAY)
             waitForStart();
+            robot.servoIntake.setPosition(0);
 
             // run until the end of the match (driver presses STOP)
             while (opModeIsActive()) {
@@ -81,6 +84,27 @@ public class BrokenBot extends LinearOpMode{
                     if(servoPosition < -1) servoPosition = -1;
                 }   // end if
 
+                if(gamepad1.dpad_down) {
+                    targetPosition = robot.ARMPOSITIONDOWN;
+                    cupPosition= robot.INTAKECUPDOWN;
+                } else if(gamepad1.dpad_right){
+                    targetPosition = robot.ARMCUPMID;
+                    cupPosition = robot.INTAKECUPMID;
+                }else if(gamepad1.dpad_left ) {
+                    targetPosition = robot.ARMCUPHIGH;
+                    cupPosition = -0.5;
+                }else if(gamepad1.dpad_up){
+                    targetPosition = robot.ARMCUPSHARED;
+                    cupPosition = robot.INTAKECUPHIGH;
+                }
+
+
+                robot.servoIntake.setPosition(cupPosition);
+                sleep(50);
+                robot.motorArm.setTargetPosition(targetPosition);
+                robot.motorArm.setPower(-0.5);
+
+
                 robot.servoIntake.setPosition(servoPosition);
 
                 if (gamepad2.a){
@@ -94,6 +118,7 @@ public class BrokenBot extends LinearOpMode{
                     robot.motorArm.setPower(0);
                 }   // end if
                 telemetry.addData("ArmEncoder", robot.motorArm.getCurrentPosition());
+                telemetry.addData("servoIntake Position = ", robot.servoIntake.getPosition());
                 telemetry.addData("motorRF", robot.motorRF.getCurrentPosition());
                 telemetry.addData("motorLF", robot.motorLF.getCurrentPosition());
                 telemetry.addData("motorRR", robot.motorRR.getCurrentPosition());

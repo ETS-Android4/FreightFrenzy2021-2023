@@ -25,8 +25,17 @@ public class HWProfile {
     public final double duckSpeed=0.6;
     public final int autoSleepTime=10000;
 
-    final public double TICKSPERROTATION = 30;
+    final public double INTAKECUPDOWN = 0.3;
+    final public double INTAKECUPMID = 0.45;
+    final public double INTAKECUPHIGH = 0.3;
+    final public int ARMPOSITIONDOWN = 0;
+    final public int ARMCUPMID = -490;
+    final public int ARMCUPHIGH = -1800;
+    final public int ARMCUPSHARED = -1400;
+
+
     final public double DISTANCEPERROTATION = 4; // assuming inches
+
 
 
     /* local OpMode members. */

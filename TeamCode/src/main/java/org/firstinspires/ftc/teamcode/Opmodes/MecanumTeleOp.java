@@ -96,6 +96,9 @@ public class MecanumTeleOp extends LinearOpMode {
                 } else if(gamepad1.dpad_right || gamepad2.dpad_right){
                     targetPosition = -490;
                     cupPosition = 0.25;
+                }else if(gamepad1.dpad_left || gamepad2.dpad_left) {
+                    targetPosition = -1800;
+                    cupPosition = -0.5;
                 }else if(gamepad1.dpad_up || gamepad2.dpad_up){
                     targetPosition = -1400;
                     cupPosition = 0.1;
