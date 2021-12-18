@@ -80,7 +80,7 @@ public class MecanumTeleOp extends LinearOpMode {
                     robot.motorDuck.setPower(0);
                 }   // end of if(gamepad1.left_bumper)
 
-                if(gamepad2.right_trigger>0.2){
+/**                if(gamepad2.right_trigger>0.2){
                     robot.servoIntake.setPosition(1);
                 }else{
                     if(robot.motorArm.getCurrentPosition()>100){
@@ -89,7 +89,58 @@ public class MecanumTeleOp extends LinearOpMode {
                         robot.servoIntake.setPosition(0);
                     }
                 }
+ **/
 
+                if(gamepad1.dpad_down || gamepad2.dpad_down) {
+                    targetPosition = robot.ARMPOSITIONDOWN;
+                    robot.servoIntake.setPosition(robot.INTAKECUPUP);
+                } else if(gamepad1.dpad_right || gamepad2.dpad_right){
+                    targetPosition = robot.ARMPOSITIONMID;
+                }else if(gamepad1.dpad_left  || gamepad2.dpad_left) {
+                    targetPosition = robot.ARMPOSITIONSHARED;
+                }else if(gamepad1.dpad_up || gamepad2.dpad_up){
+                    targetPosition = robot.ARMPOSITIONHIGH;
+                }
+
+                if(robot.motorArm.getCurrentPosition() > -5 &&
+                        robot.motorArm.getCurrentPosition() < 5){
+                    cupPosition = robot.INTAKECUPDOWN;
+                    telemetry.addData("currentPosition >armpositiondown - 5","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -10 &&
+                        robot.motorArm.getCurrentPosition() > -200){
+                    cupPosition = robot.INTAKECUPUP;
+                    telemetry.addData("Passing Intake","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -300 &&
+                        robot.motorArm.getCurrentPosition() > -800){
+                    cupPosition = robot.INTAKECUPUP;
+                    telemetry.addData("Passing Intake","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -800 &&
+                        robot.motorArm.getCurrentPosition() > -1600){
+                    cupPosition = robot.INTAKECUPHIGH;
+                    telemetry.addData("currentPosition >armpositionHigh","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -1700) {
+                    cupPosition = robot.INTAKECUPSHARED;
+                    telemetry.addData("currentPosition >armpositionShared + 100","");
+                }
+
+                if(gamepad1.b || gamepad2.b){
+                    cupPosition = robot.INTAKEHIGHDUMP;
+                }
+
+                robot.servoIntake.setPosition(cupPosition);
+                sleep(50);
+                robot.motorArm.setTargetPosition(targetPosition);
+                robot.motorArm.setPower(-0.5);
+
+                /**
                 if(gamepad1.dpad_down || gamepad2.dpad_down) {
                     targetPosition = 0;
                     cupPosition= 0.05;
@@ -109,14 +160,13 @@ public class MecanumTeleOp extends LinearOpMode {
                 } else if(gamepad1.right_bumper || gamepad2.right_bumper){
                     cupPosition = 0.5;
                 }
-                robot.servoIntake.setPosition(cupPosition);
-                sleep(50);
-                robot.motorArm.setTargetPosition(targetPosition);
-                robot.motorArm.setPower(-0.5);
+                 **/
 
-                if(gamepad2.a){
-                    robot.motorIntake.setPower(.75);
-                }else{
+                if(gamepad1.a ||gamepad2.a){
+                    robot.motorIntake.setPower(0.75);
+                } else if (gamepad1.x || gamepad2.x) {
+                    robot.motorIntake.setPower(-0.75);
+                } else {
                     robot.motorIntake.setPower(0);
                 }
 

@@ -84,40 +84,51 @@ public class BrokenBot extends LinearOpMode{
                 if(gamepad1.dpad_down) {
                     targetPosition = robot.ARMPOSITIONDOWN;
                     robot.servoIntake.setPosition(robot.INTAKECUPUP);
-                    cupPosition= robot.INTAKECUPUP;
+//                    cupPosition= robot.INTAKECUPUP;
                 } else if(gamepad1.dpad_right){
                     targetPosition = robot.ARMPOSITIONMID;
-                    cupPosition = robot.INTAKECUPUP;
+//                    cupPosition = robot.INTAKECUPUP;
                 }else if(gamepad1.dpad_left ) {
                     targetPosition = robot.ARMPOSITIONSHARED;
-                    cupPosition = robot.INTAKECUPUP;
+//                    cupPosition = robot.INTAKECUPUP;
                 }else if(gamepad1.dpad_up){
                     targetPosition = robot.ARMPOSITIONHIGH;
-                    cupPosition = robot.INTAKECUPUP;
+//                    cupPosition = robot.INTAKECUPUP;
                 }
 
-                if(robot.motorArm.getCurrentPosition() > (robot.ARMPOSITIONDOWN - 5)){
+                if(robot.motorArm.getCurrentPosition() > -5 &&
+                            robot.motorArm.getCurrentPosition() < 5){
                     cupPosition = robot.INTAKECUPDOWN;
                     telemetry.addData("currentPosition >armpositiondown - 5","");
-                } else if(robot.motorArm.getCurrentPosition() > (robot.ARMPOSITIONDOWN - 15)){
-                    cupPosition = robot.INTAKECUPUP;
-                    telemetry.addData("currentPosition >armpositionDown - 10","");
-
-                }else if(robot.motorArm.getCurrentPosition() > (robot.ARMPOSITIONHIGH + 300)){
-                    cupPosition = robot.INTAKECUPHIGH;
-                    telemetry.addData("currentPosition >armpositionHigh + 100","");
-                } else if(robot.motorArm.getCurrentPosition() > (robot.ARMPOSITIONMID + 100)) {
-                    cupPosition = robot.INTAKECUPMID;
-                    telemetry.addData("currentPosition >armpositionMID + 100","");
-                } else if(robot.motorArm.getCurrentPosition() > (robot.ARMPOSITIONSHARED + 100)){
-                    cupPosition = robot.INTAKECUPSHARED;
-                    telemetry.addData("currentPosition >armpositionshared + 100","");
                 }
 
+                if(robot.motorArm.getCurrentPosition() < -10 &&
+                            robot.motorArm.getCurrentPosition() > -200){
+                    cupPosition = robot.INTAKECUPUP;
+                    telemetry.addData("Passing Intake","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -300 &&
+                        robot.motorArm.getCurrentPosition() > -800){
+                    cupPosition = robot.INTAKECUPUP;
+                    telemetry.addData("Passing Intake","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -800 &&
+                        robot.motorArm.getCurrentPosition() > -1600){
+                    cupPosition = robot.INTAKECUPHIGH;
+                    telemetry.addData("currentPosition >armpositionHigh","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -1700) {
+                    cupPosition = robot.INTAKECUPSHARED;
+                    telemetry.addData("currentPosition >armpositionShared + 100","");
+                }
 
                 if(gamepad1.b){
                     cupPosition = robot.INTAKEHIGHDUMP;
                 }
+
                 robot.servoIntake.setPosition(cupPosition);
                 sleep(50);
                 robot.motorArm.setTargetPosition(targetPosition);

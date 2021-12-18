@@ -6,15 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Red Storage", group = "Competition")
+@Autonomous(name = "Blue Hub", group = "Competition")
 
-public class AutoRedStorage extends LinearOpMode {
+public class AutoBlueHub extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
     private State state = State.RUN1;
 
-    public AutoRedStorage() {
+    public AutoBlueHub() {
 
     }   // end of TestAuto constructor
 
@@ -36,6 +36,7 @@ public class AutoRedStorage extends LinearOpMode {
          * Calibrate / initialize the game sensor
          */
 
+        robot.servoIntake.setPosition(robot.INTAKECUPUP);
         telemetry.addData("Z Value = ", drive.getZAngle());
         telemetry.addData("Robot state = ", "INITIALIZED");
         telemetry.update();
@@ -48,28 +49,39 @@ public class AutoRedStorage extends LinearOpMode {
 
                     break;
 
+                case PLACE_SE:
+
+                    break;
+
                 case RUN1:
                     // strafe away from the wall
-                    drive.driveTime(.5, -90, 0.42);
+                    drive.driveTime(.5, 180, 1);
 
                     sleep(500);
 
+                    robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH);
+                    robot.motorArm.setPower(0.4);
+
+                    sleep(3000);
+
+                    robot.motorArm.setTargetPosition(0);
+                    robot.motorArm.setPower(0.4);
+
+                    sleep(3000);
+
+                    drive.driveTime(.5, 0, .5);
+
+                    drive.driveTurn(-90, 3);
+
+                    drive.driveTime(.5, 0, 3);
+
                     // drive towards the turntable
-                    drive.driveTime(0.2, 180, 3.2);
+//                    drive.driveTime(0.5, 0, 1.5);
 
-//                    drive.driveTime(.1,90,1);
-
-                    // turn duck motor on
-                    robot.motorDuck.setPower(-robot.duckSpeed);
-
-                    sleep(robot.autoSleepTime);
-                    drive.motorsHalt();
-                    robot.motorDuck.setPower(0);
+//                    drive.driveTime(.1, 90, .25);
 
                     // park in storage
-                    drive.driveTime(.5, -90, 1.25);
-
-                    
+//                    drive.driveTime(.5, -90, 1.15);
 
                     state = State.HALT;
 
@@ -96,7 +108,7 @@ public class AutoRedStorage extends LinearOpMode {
     }// end of runOpMode constructor
 
     enum State {
-        TEST, RUN1, PARK, HALT;
+        TEST, PLACE_SE, RUN1, PARK, HALT;
     }   // end of enum State
 
-}   // end of class AutoRedStorage
+}   // end of class AutoBlueStorage

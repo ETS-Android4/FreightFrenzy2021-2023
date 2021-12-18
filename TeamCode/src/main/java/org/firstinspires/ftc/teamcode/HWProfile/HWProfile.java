@@ -29,17 +29,15 @@ public class HWProfile {
     final public double INTAKECUPMID = 0.45;
     final public double INTAKECUPHIGH = 0.17;
     final public double INTAKECUPSHARED = 0.0;
-    final public double INTAKEHIGHDUMP= 0.56;
+    final public double INTAKEHIGHDUMP= 0.65;
     final public double INTAKECUPUP= 0.74;
     final public int ARMPOSITIONDOWN = 0;
     final public int ARMPOSITIONMID = -490;
     final public int ARMPOSITIONHIGH = -1400;
-    final public int ARMPOSITIONSHARED = -1800;
+    final public int ARMPOSITIONSHARED = -2000;
 
 
     final public double DISTANCEPERROTATION = 4; // assuming inches
-
-
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -68,6 +66,10 @@ public class HWProfile {
         motorRF.setDirection(DcMotor.Direction.FORWARD);
         motorRR.setDirection(DcMotor.Direction.FORWARD);
         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorLR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorArm.setTargetPosition(0);
         motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
