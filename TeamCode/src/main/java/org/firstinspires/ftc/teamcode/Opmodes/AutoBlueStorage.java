@@ -42,7 +42,7 @@ public class AutoBlueStorage extends LinearOpMode {
 
         waitForStart();
 
-        if (opModeIsActive()) {
+        while(opModeIsActive()) {
             switch (state) {
                 case TEST:
 
@@ -61,7 +61,7 @@ public class AutoBlueStorage extends LinearOpMode {
                     // drive towards the turntable
                     drive.driveTime(0.5, 0, 1.5);
 
-                    drive.driveTime(.1, 90, .25);
+                    drive.driveTime(0.2, 90, .25);
 
                     // turn duck motor on
                     robot.motorDuck.setPower(robot.duckSpeed);
@@ -92,6 +92,9 @@ public class AutoBlueStorage extends LinearOpMode {
                     break;
             }   // end of the switch state
         }   // end of if opModeIsActive()
+
+        // End the program
+        requestOpModeStop();
 
     }// end of runOpMode constructor
 

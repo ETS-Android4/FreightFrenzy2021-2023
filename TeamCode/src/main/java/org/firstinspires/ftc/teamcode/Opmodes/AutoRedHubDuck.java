@@ -6,15 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Blue Hub Warehouse", group = "Competition")
+@Autonomous(name = "Red Hub Duck", group = "Competition")
 
-public class AutoBlueHub extends LinearOpMode {
+public class AutoRedHubDuck extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
     private State state = State.RUN1;
 
-    public AutoBlueHub() {
+    public AutoRedHubDuck() {
 
     }   // end of TestAuto constructor
 
@@ -54,43 +54,48 @@ public class AutoBlueHub extends LinearOpMode {
                     break;
 
                 case RUN1:
-                    // strafe away from the wall
-                    sleep(5000);
-
-                    // strafe to scoring position
+                    // strafe into scoring position
                     drive.driveTime(0.5, -90, 1);
 
-                    // drive towards the alliance hub
-                    drive.driveTime(.5, 180, 0.9);
+                    //
+                    drive.driveTime(0.5, 180, 0.9);
 
-//                    sleep(500);
 
-                    // score the shipping element into the alliance hub
+
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
                     robot.motorArm.setPower(0.4);
 
                     sleep(2000);
 
-                    // return the arm to ready position
-                    robot.motorArm.setTargetPosition(-10);
+                    robot.motorArm.setTargetPosition(0);
                     robot.motorArm.setPower(0.4);
 
-                    sleep(1000);
+//                    sleep(3000);
 
-                    // drive towards the outside wall
-                    drive.driveTime(0.5, 0, .9);
+                    drive.driveTime(0.5, 0, 0.7);
 
-                    // turn towards the warehouse
-                    drive.driveTurn(90, 0.3);
+                    drive.driveTurn(-90, 0.3);
 
-                    // strafe into the wall
-                    drive.driveTime(.5, -90, 1);
+                    drive.driveTime(0.5, 90, 1);
 
-                    // drive towards the warehouse
-                    drive.driveTime(.5, 0, 2.3);
+                    // strafe away from the wall
+                    drive.driveTime(0.5, -90, .9);
 
-                    // strafe from the wall to make room for another bot to park
-                    drive.driveTime(0.5, 90, 1.2);
+                    sleep(500);
+
+                    // drive towards the turntable
+                    drive.driveTime(0.5, 180, 2.4);
+                    drive.driveTime(0.2, 90, 0.3);
+
+                    // turn duck motor on
+                    robot.motorDuck.setPower(-robot.duckSpeed);
+
+                    sleep(robot.autoSleepTime);
+                    drive.motorsHalt();
+                    robot.motorDuck.setPower(0);
+
+                    // park in storage
+                    drive.driveTime(0.5, -90, 1.25);
 
                     state = State.HALT;
 
@@ -112,10 +117,7 @@ public class AutoBlueHub extends LinearOpMode {
 
                     break;
             }   // end of the switch state
-        }   // end of while opModeIsActive()
-
-        // End the program
-        requestOpModeStop();
+        }   // end of if opModeIsActive()
 
     }// end of runOpMode constructor
 

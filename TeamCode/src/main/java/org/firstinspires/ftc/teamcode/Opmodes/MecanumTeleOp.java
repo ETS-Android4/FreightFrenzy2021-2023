@@ -97,7 +97,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 } else if(gamepad1.dpad_right || gamepad2.dpad_right){
                     targetPosition = robot.ARMPOSITIONMID;
                 }else if(gamepad1.dpad_left  || gamepad2.dpad_left) {
-                    targetPosition = robot.ARMPOSITIONSHARED;
+                    targetPosition = robot.ARMPOSITIONMID;
                 }else if(gamepad1.dpad_up || gamepad2.dpad_up){
                     targetPosition = robot.ARMPOSITIONHIGH;
                 }
@@ -162,7 +162,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 }
                  **/
 
-                if(gamepad1.a ||gamepad2.a){
+                if(gamepad1.a){
                     robot.motorIntake.setPower(0.75);
                 } else if (gamepad1.x || gamepad2.x) {
                     robot.motorIntake.setPower(-0.75);

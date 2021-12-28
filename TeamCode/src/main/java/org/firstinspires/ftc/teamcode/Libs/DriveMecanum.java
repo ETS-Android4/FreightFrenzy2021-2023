@@ -42,7 +42,8 @@ public class DriveMecanum {
 
             currentZ = getZAngle();
             if (currentZ != initZ){
-                zCorrection = Math.abs(initZ - currentZ)/100;
+//                zCorrection = Math.abs(initZ - currentZ)/100;
+                zCorrection = 0;
 
                 if (heading > 180 && heading < 359.999999) {
                     if (currentZ > initZ) {
@@ -148,7 +149,7 @@ public class DriveMecanum {
         double Cp = 0.06;
         double Ci = 0.0003;
         double Cd = 0.0001;
-        double maxSpeed = 0.5;
+        double maxSpeed = 0.4;
         double rotationSpeed;
         double derivative = 0, deltaError, lastError = 0;
 
@@ -163,9 +164,9 @@ public class DriveMecanum {
                 // Clip motor speed
                 rotationSpeed = Range.clip(rotationSpeed, -maxSpeed, maxSpeed);
 
-                if ((rotationSpeed > -0.25) && (rotationSpeed < 0)) {
+                if ((rotationSpeed > -0.21) && (rotationSpeed < 0)) {
                     rotationSpeed = -0.21;
-                } else if ((rotationSpeed < 0.25) && (rotationSpeed > 0)) {
+                } else if ((rotationSpeed < 0.21) && (rotationSpeed > 0)) {
                     rotationSpeed = 0.21;
                 }
 

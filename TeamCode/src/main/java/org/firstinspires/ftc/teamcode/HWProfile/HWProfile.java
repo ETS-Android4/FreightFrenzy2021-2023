@@ -23,7 +23,7 @@ public class HWProfile {
     public Servo servoIntake = null;
 
     public final double duckSpeed=0.6;
-    public final int autoSleepTime=10000;
+    public final int autoSleepTime=5000;
 
     final public double INTAKECUPDOWN = 0.59;
     final public double INTAKECUPMID = 0.45;
