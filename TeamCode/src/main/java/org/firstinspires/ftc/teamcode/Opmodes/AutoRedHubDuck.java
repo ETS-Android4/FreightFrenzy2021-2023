@@ -57,39 +57,45 @@ public class AutoRedHubDuck extends LinearOpMode {
                     // strafe into scoring position
                     drive.driveTime(0.5, -90, 1);
 
-                    //
+                    // drive to hub to score
                     drive.driveTime(0.5, 180, 0.9);
 
-
-
+                    // score in the hub
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
                     robot.motorArm.setPower(0.4);
 
                     sleep(2000);
 
+                    // reset the arm to normal position
                     robot.motorArm.setTargetPosition(0);
                     robot.motorArm.setPower(0.4);
 
 //                    sleep(3000);
 
+                    // drive towards the wall
                     drive.driveTime(0.5, 0, 0.7);
 
+                    // rotate towards the carousel
                     drive.driveTurn(-90, 0.3);
 
+                    // strafe into the wall
                     drive.driveTime(0.5, 90, 1);
 
                     // strafe away from the wall
                     drive.driveTime(0.5, -90, .9);
 
-                    sleep(500);
+//                    sleep(500);
 
                     // drive towards the turntable
                     drive.driveTime(0.5, 180, 2.4);
+
+                    // strafe into the carousel
                     drive.driveTime(0.2, 90, 0.3);
 
                     // turn duck motor on
                     robot.motorDuck.setPower(-robot.duckSpeed);
 
+                    // wait for the duck to drop off
                     sleep(robot.autoSleepTime);
                     drive.motorsHalt();
                     robot.motorDuck.setPower(0);

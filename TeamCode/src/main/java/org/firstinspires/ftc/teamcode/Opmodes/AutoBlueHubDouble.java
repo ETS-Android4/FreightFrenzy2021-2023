@@ -7,18 +7,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Red Hub Bonus", group = "Competition")
-
-public class AutoRedHubDouble extends LinearOpMode {
+@Autonomous(name = "Blue Hub Bonus", group = "Competition")
+public class AutoBlueHubDouble extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
     private State state = State.RUN1;
     private ElapsedTime runtime = new ElapsedTime();
 
-    public AutoRedHubDouble() {
+    public AutoBlueHubDouble() {
 
-    }   // end of AutoRedHubDouble constructor
+    }   // end of TestAuto constructor
 
     public void runOpMode() {
         telemetry.addData("Robot State = ", "READY");
@@ -51,47 +50,41 @@ public class AutoRedHubDouble extends LinearOpMode {
                     break;
 
                 case RUN1:
-                    // Pause for alliance partner
+                    // strafe away from the wall
 //                    sleep(5000);
 
-                    // strafe towards hub
-                    drive.driveTime(0.8, 90, 0.6);
+                    // strafe to scoring position
+                    drive.driveTime(0.5, -90, 1);
 
-                    // drive towards the hu-b
-                    drive.motorsOn(-0.8, -0.8, -0.8, -0.8);
-//                    drive.driveTime(0.8, 180, 0.6);
+                    // drive towards the alliance hub
+                    drive.driveTime(.5, 180, 0.9);
 
-//                    sleep(500);
-
-                    // move arm into scoring position
+                    // score the shipping element into the alliance hub
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
-                    robot.motorArm.setPower(0.55);
-
-                    sleep(600);
-                    drive.motorsHalt();
-
-                    sleep(900);
-
-                    // return arm to stationary position
-                    robot.motorArm.setTargetPosition(0);
                     robot.motorArm.setPower(0.4);
 
-//                    sleep(1000);
+                    sleep(2000);
 
-                    // drive towards wall
-                    drive.driveTime(0.9, 0, 0.5);
+                    // return the arm to ready position
+                    robot.motorArm.setTargetPosition(-10);
+                    robot.motorArm.setPower(0.4);
 
-                    // rotate towards warehouse
-                    drive.driveTurn(-90, 0.3);
+                    sleep(1000);
+
+                    // drive towards the outside wall
+                    drive.driveTime(0.5, 0, .9);
+
+                    // turn towards the warehouse
+                    drive.driveTurn(90, 0.3);
 
                     // strafe into the wall
-                    drive.driveTime(0.6, 90, 0.5);
+                    drive.driveTime(.5, -90, 1);
 
-                    // rotate towards warehouse
-                    drive.driveTurn(-88, 0.3);
+                    // drive towards the warehouse
+                    drive.driveTime(.5, 0, 2.3);
 
-                    // drive towards warehouse
-                    drive.driveTime(0.8, 0, 1.6);
+                    // strafe from the wall to make room for another bot to park
+                    drive.driveTime(0.5, 90, 1.2);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
@@ -111,7 +104,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     // drive into the elements
                     drive.driveTime(0.4, 0, 1);
 
-                    sleep(1000);
+//                    sleep(1000);
 
                     // assume elements captured
                     // set the cup to an upright position
@@ -125,14 +118,14 @@ public class AutoRedHubDouble extends LinearOpMode {
                     // set intake to spit out any scoring elements
                     robot.motorIntake.setPower(-1);
 
-                    //rotate to -90
-                    drive.driveTurn(-90, 0.3);
+                    // straighten robot out
+                    drive.driveTurn(90, 0.3);
 
                     //strafe into the wall
-                    drive.driveTime(0.5, 90, 0.5);
+                    drive.driveTime(0.5, -90, 0.5);
 
                     // drive to scoring position
-                    drive.driveTime(0.8, 180, 1.7);
+                    drive.driveTime(0.8, 180, 2);
 
                     // turn off the intake
                     robot.motorIntake.setPower(0);
@@ -145,7 +138,7 @@ public class AutoRedHubDouble extends LinearOpMode {
 
                     // move arm into scoring position
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
-                    robot.motorArm.setPower(0.5);
+                    robot.motorArm.setPower(0.4);
 
                     sleep(1000);
 
@@ -154,23 +147,16 @@ public class AutoRedHubDouble extends LinearOpMode {
                     robot.motorArm.setPower(0.4);
 
                     // drive towards wall
-                    drive.driveTime(0.8, 0, 0.6);
+                    drive.driveTime(0.5, 0, 0.7);
 
                     // rotate towards warehouse
-                    drive.driveTurn(-90, 0.3);
+                    drive.driveTurn(90, 0.3);
 
                     // strafe into the wall
-                    drive.driveTime(0.6, 90, 0.5);
-
-                    // rotate towards warehouse
-                    drive.driveTurn(-90, 0.2);
-
-                    // rotate towards warehouse
-                    drive.driveTurn(-90, 0.3);
+                    drive.driveTime(0.5, -90, 1);
 
                     // drive towards warehouse
                     drive.driveTime(0.8, 0, 1.5);
-
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
@@ -190,7 +176,7 @@ public class AutoRedHubDouble extends LinearOpMode {
 
                     break;
             }   // end of the switch state
-        }   // end of if opModeIsActive()
+        }   // end of while opModeIsActive()
 
         // End the program
         requestOpModeStop();
@@ -201,4 +187,4 @@ public class AutoRedHubDouble extends LinearOpMode {
         TEST, PLACE_SE, RUN1, BONUS, HALT
     }   // end of enum State
 
-}   // end of class AutoRedHubDouble
+}   // end of class AutoBlueStorage

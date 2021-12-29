@@ -231,6 +231,12 @@ public class DriveMecanum {
         robot.motorRR.setPower(0);
     } // end of motorsHalt method
 
+    public void motorsOn(double powerRF, double powerLF, double powerLR, double powerRR){
+        robot.motorRF.setPower(powerRF);
+        robot.motorLF.setPower(powerLF);
+        robot.motorLR.setPower(powerLR);
+        robot.motorRR.setPower(powerRR);
+    }
     /*
      * Method updateValues
      */

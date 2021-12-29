@@ -86,8 +86,6 @@ public class AutoBlueHubDuck extends LinearOpMode {
                     // Strafe away from the wall
                     drive.driveTime(0.5, -90, 0.8);
 
-//                    sleep(500);
-
                     // drive towards the turntable
                     drive.driveTime(0.5, 0, 2.1);
 
@@ -133,4 +131,4 @@ public class AutoBlueHubDuck extends LinearOpMode {
         TEST, PLACE_SE, RUN1, PARK, HALT;
     }   // end of enum State
 
-}   // end of class AutoBlueStorage
+}   // end of class AutoBlueHubDuck

@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
 @Autonomous(name = "Red Storage", group = "Competition")
-
+@Disabled
 public class AutoRedStorage extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
@@ -42,7 +43,7 @@ public class AutoRedStorage extends LinearOpMode {
 
         waitForStart();
 
-        if (opModeIsActive()) {
+        while(opModeIsActive()) {
             switch (state) {
                 case TEST:
 
@@ -52,7 +53,7 @@ public class AutoRedStorage extends LinearOpMode {
                     // strafe away from the wall
                     drive.driveTime(.5, -90, 0.42);
 
-                    sleep(500);
+//                    sleep(500);
 
                     // drive towards the turntable
                     drive.driveTime(0.2, 180, 3.2);
@@ -68,8 +69,6 @@ public class AutoRedStorage extends LinearOpMode {
 
                     // park in storage
                     drive.driveTime(.5, -90, 1.25);
-
-                    
 
                     state = State.HALT;
 

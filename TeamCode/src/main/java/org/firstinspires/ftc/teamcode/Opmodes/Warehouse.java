@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 
-@Autonomous(name = "Warehouse", group = "Competition")
+@Autonomous(name = "Park Only", group = "Competition")
 //@Disabled
 
 public class Warehouse extends LinearOpMode {

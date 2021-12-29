@@ -16,7 +16,7 @@ public class AutoBlueHub extends LinearOpMode {
 
     public AutoBlueHub() {
 
-    }   // end of TestAuto constructor
+    }   // end of AutoBlueHub constructor
 
     public void runOpMode() {
         telemetry.addData("Robot State = ", "READY");
@@ -32,10 +32,6 @@ public class AutoBlueHub extends LinearOpMode {
          */
         DriveMecanum drive = new DriveMecanum(robot, opMode);
 
-        /*
-         * Calibrate / initialize the game sensor
-         */
-
         robot.servoIntake.setPosition(robot.INTAKECUPUP);
         telemetry.addData("Z Value = ", drive.getZAngle());
         telemetry.addData("Robot state = ", "INITIALIZED");
@@ -49,10 +45,6 @@ public class AutoBlueHub extends LinearOpMode {
 
                     break;
 
-                case PLACE_SE:
-
-                    break;
-
                 case RUN1:
                     // strafe away from the wall
                     sleep(5000);
@@ -62,8 +54,6 @@ public class AutoBlueHub extends LinearOpMode {
 
                     // drive towards the alliance hub
                     drive.driveTime(.5, 180, 0.9);
-
-//                    sleep(500);
 
                     // score the shipping element into the alliance hub
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
@@ -120,7 +110,7 @@ public class AutoBlueHub extends LinearOpMode {
     }// end of runOpMode constructor
 
     enum State {
-        TEST, PLACE_SE, RUN1, PARK, HALT;
+        TEST, PLACE_SE, RUN1, PARK, HALT
     }   // end of enum State
 
 }   // end of class AutoBlueStorage
