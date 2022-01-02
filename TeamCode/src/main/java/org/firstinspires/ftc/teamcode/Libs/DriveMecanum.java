@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Libs;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 
@@ -41,7 +42,8 @@ public class DriveMecanum {
 
             currentZ = getZAngle();
             if (currentZ != initZ){
-                zCorrection = Math.abs(initZ - currentZ)/100;
+//                zCorrection = Math.abs(initZ - currentZ)/100;
+                zCorrection = 0;
 
                 if (heading > 180 && heading < 359.999999) {
                     if (currentZ > initZ) {
@@ -131,6 +133,87 @@ public class DriveMecanum {
         motorsHalt();
     }   // close robotCorrect method
 
+    // distance will power side with highest power
+    public void driveArcTurn(double powerLeft, double powerRight, double heading, double distance) {
+
+    }
+
+    public void driveTurn(double targetAngle, double errorFactor) {
+        double integral = 0;
+        int iterations = 0;
+        ElapsedTime timeElapsed = new ElapsedTime();
+        double startTime = timeElapsed.time();
+        double totalTime;
+        double v1, v2, v3, v4;
+        double error=0;
+        double Cp = 0.06;
+        double Ci = 0.0003;
+        double Cd = 0.0001;
+        double maxSpeed = 0.8;
+        double rotationSpeed;
+        double derivative = 0, deltaError, lastError = 0;
+
+        error = getZAngle() - targetAngle;
+        // nested while loops are used to allow for a final check of an overshoot situation
+        while ((Math.abs(error) >= errorFactor) && opMode.opModeIsActive()) {
+            while ((Math.abs(error) >= errorFactor) && opMode.opModeIsActive()) {
+                error = getZAngle() - targetAngle;
+                deltaError = lastError - error;
+                rotationSpeed = ((Cp * error) + (Ci * integral) + (Cd * derivative)) * maxSpeed;
+
+                // Clip motor speed
+                rotationSpeed = Range.clip(rotationSpeed, -maxSpeed, maxSpeed);
+
+                if ((rotationSpeed > -0.21) && (rotationSpeed < 0)) {
+                    rotationSpeed = -0.21;
+                } else if ((rotationSpeed < 0.21) && (rotationSpeed > 0)) {
+                    rotationSpeed = 0.21;
+                }
+
+                v1 = rotationSpeed;
+                v2 = rotationSpeed;
+                v3 = -rotationSpeed;
+                v4 = -rotationSpeed;
+
+                setDrivePower(v1,v2,v3,v4);
+
+                lastError = error;
+                iterations++;
+
+                opMode.telemetry.addData("InitZ/targetAngle value  = ", targetAngle);
+                opMode.telemetry.addData("Current Angle  = ", getZAngle());
+                opMode.telemetry.addData("Theta/lastError Value= ", lastError);
+                opMode.telemetry.addData("CurrentZ/Error Value = ", error);
+                opMode.telemetry.addData("zCorrection/derivative Value = ", derivative);
+
+                opMode.telemetry.addData("Right Front = ", v1);
+                opMode.telemetry.addData("Left Front = ", v3);
+                opMode.telemetry.addData("Left Rear = ", v4);
+                opMode.telemetry.addData("Right Rear = ", v2);
+                opMode.telemetry.update();
+
+
+            }   // end of while Math.abs(error)
+            motorsHalt();
+            error = getZAngle() - targetAngle;
+        }
+
+        // shut off the drive motors
+        motorsHalt();
+
+        totalTime = timeElapsed.time() - startTime;
+        opMode.telemetry.addData("Iterations = ", iterations);
+        opMode.telemetry.addData("Final Angle = ", getZAngle());
+        opMode.telemetry.addData("Total Time Elapsed = ", totalTime);
+        opMode.telemetry.update();
+    }   //end of the PIDRotate Method
+
+    public void setDrivePower(double v1, double v2, double v3, double v4){
+        robot.motorRF.setPower(v1);
+        robot.motorRR.setPower(v2);
+        robot.motorLF.setPower(v3);
+        robot.motorLR.setPower(v4);
+    }
     /*
      * Method getZAngle()
      */
@@ -148,6 +231,12 @@ public class DriveMecanum {
         robot.motorRR.setPower(0);
     } // end of motorsHalt method
 
+    public void motorsOn(double powerRF, double powerLF, double powerLR, double powerRR){
+        robot.motorRF.setPower(powerRF);
+        robot.motorLF.setPower(powerLF);
+        robot.motorLR.setPower(powerLR);
+        robot.motorRR.setPower(powerRR);
+    }
     /*
      * Method updateValues
      */

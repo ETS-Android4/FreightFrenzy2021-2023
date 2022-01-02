@@ -14,12 +14,14 @@ public class BrokenBot extends LinearOpMode{
 
     /* Declare OpMode members. */
         HWProfile robot           = new HWProfile();
-        public double servoPosition = 0;
+//        public double servoPosition = 0;
         public double robotAngle, rightX, rightY, v1, v2, v3, v4, theta, theta2, r;
+        public int targetPosition=0;
+        public double cupPosition=robot.INTAKECUPDOWN;
+
 
         @Override
         public void runOpMode() {
-
 
             /* Initialize the hardware variables.
              * The init() method of the hardware class does all the work here
@@ -35,8 +37,6 @@ public class BrokenBot extends LinearOpMode{
 
             // run until the end of the match (driver presses STOP)
             while (opModeIsActive()) {
-
-
                 robotAngle = Math.atan2(gamepad1.left_stick_y, (-gamepad1.left_stick_x)) - Math.PI / 4;
                 rightX = gamepad1.right_stick_x;
                 rightY = -gamepad1.right_stick_y;
@@ -73,33 +73,81 @@ public class BrokenBot extends LinearOpMode{
                 }else robot.motorRR.setPower(0);
 
 
-                if(gamepad2.left_trigger >0){
-                    servoPosition = servoPosition + 0.005;
-                    if(servoPosition >1) servoPosition = 1;
-                }  else if(gamepad2.right_trigger >0 ) {
-                    servoPosition = servoPosition - 0.005;
-                    if(servoPosition < -1) servoPosition = -1;
+                if(gamepad2.left_trigger > 0.1){
+                    cupPosition = cupPosition + 0.005;
+                    if(cupPosition >1) cupPosition = 1;
+                }  else if(gamepad2.right_trigger > 0.1 ) {
+                    cupPosition = cupPosition - 0.005;
+                    if(cupPosition < 0) cupPosition = 0;
                 }   // end if
 
-                robot.servoIntake.setPosition(servoPosition);
+                if(gamepad1.dpad_down) {
+                    targetPosition = robot.ARMPOSITIONDOWN;
+                    robot.servoIntake.setPosition(robot.INTAKECUPUP);
+//                    cupPosition= robot.INTAKECUPUP;
+                } else if(gamepad1.dpad_right){
+                    targetPosition = robot.ARMPOSITIONMID;
+//                    cupPosition = robot.INTAKECUPUP;
+                }else if(gamepad1.dpad_left ) {
+                    targetPosition = robot.ARMPOSITIONSHARED;
+//                    cupPosition = robot.INTAKECUPUP;
+                }else if(gamepad1.dpad_up){
+                    targetPosition = robot.ARMPOSITIONHIGH;
+//                    cupPosition = robot.INTAKECUPUP;
+                }
+
+                if(robot.motorArm.getCurrentPosition() > -5 &&
+                            robot.motorArm.getCurrentPosition() < 5){
+                    cupPosition = robot.INTAKECUPDOWN;
+                    telemetry.addData("currentPosition >armpositiondown - 5","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -10 &&
+                            robot.motorArm.getCurrentPosition() > -200){
+                    cupPosition = robot.INTAKECUPUP;
+                    telemetry.addData("Passing Intake","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -300 &&
+                        robot.motorArm.getCurrentPosition() > -800){
+                    cupPosition = robot.INTAKECUPUP;
+                    telemetry.addData("Passing Intake","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -800 &&
+                        robot.motorArm.getCurrentPosition() > -1600){
+                    cupPosition = robot.INTAKECUPHIGH;
+                    telemetry.addData("currentPosition >armpositionHigh","");
+                }
+
+                if(robot.motorArm.getCurrentPosition() < -1700) {
+                    cupPosition = robot.INTAKECUPSHARED;
+                    telemetry.addData("currentPosition >armpositionShared + 100","");
+                }
+
+                if(gamepad1.b){
+                    cupPosition = robot.INTAKEHIGHDUMP;
+                }
+
+                robot.servoIntake.setPosition(cupPosition);
+                sleep(50);
+                robot.motorArm.setTargetPosition(targetPosition);
+                robot.motorArm.setPower(-0.5);
 
                 if (gamepad2.a){
                     robot.motorIntake.setPower(1);
                 } else {
                     robot.motorIntake.setPower(0);
                 }
-                if(Math.abs(gamepad2.right_stick_y) > 0.1){
-                    robot.motorArm.setPower(gamepad2.right_stick_y * 0.5);
-                }   else {
-                    robot.motorArm.setPower(0);
-                }   // end if
 
-                // Send telemetry message to signify robot running;
-                telemetry.addData("motorRF",  robot.motorRF.getCurrentPosition());
+                telemetry.addData("ArmEncoder", robot.motorArm.getCurrentPosition());
+                telemetry.addData("servoIntake Position = ", robot.servoIntake.getPosition());
+                telemetry.addData("motorRF", robot.motorRF.getCurrentPosition());
                 telemetry.addData("motorLF", robot.motorLF.getCurrentPosition());
-                telemetry.addData("motorLR", robot.motorLR.getCurrentPosition());
                 telemetry.addData("motorRR", robot.motorRR.getCurrentPosition());
+                telemetry.addData("motorLR", robot.motorLR.getCurrentPosition());
                 telemetry.update();
+                // Send telemetry message to signify robot running;
 
             } // end of while loop
         } // end of runOpMode
