@@ -50,41 +50,40 @@ public class AutoBlueHubDouble extends LinearOpMode {
                     break;
 
                 case RUN1:
-                    // strafe away from the wall
+                    // Pause for alliance partner
 //                    sleep(5000);
 
-                    // strafe to scoring position
-                    drive.driveTime(0.5, -90, 1);
-
-                    // drive towards the alliance hub
-                    drive.driveTime(.5, 180, 0.9);
-
-                    // score the shipping element into the alliance hub
+                    // move arm into scoring position
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
-                    robot.motorArm.setPower(0.4);
+                    robot.motorArm.setPower(0.55);
 
-                    sleep(2000);
+                    // drive towards the hub
+                    drive.motorsOn(-0.8, -0.8, -0.8, -0.8);
 
-                    // return the arm to ready position
-                    robot.motorArm.setTargetPosition(-10);
-                    robot.motorArm.setPower(0.4);
+                    sleep(600);
 
-                    sleep(1000);
+                    drive.motorsHalt();
 
-                    // drive towards the outside wall
-                    drive.driveTime(0.5, 0, .9);
+                    sleep(750);
 
-                    // turn towards the warehouse
-                    drive.driveTurn(90, 0.3);
+                    // return arm to stationary position
+                    robot.motorArm.setTargetPosition(0);
+                    robot.motorArm.setPower(0.55);
+
+                    // drive towards wall
+                    drive.driveTime(0.9, 0, 0.4);
+
+                    // rotate towards warehouse
+                    drive.driveTurn(88, 0.6);
 
                     // strafe into the wall
-                    drive.driveTime(.5, -90, 1);
+                    drive.driveTime(0.8, -90, 0.5);
 
-                    // drive towards the warehouse
-                    drive.driveTime(.5, 0, 2.3);
+                    // rotate towards warehouse
+                    drive.driveTurn(88, 0.5);
 
-                    // strafe from the wall to make room for another bot to park
-                    drive.driveTime(0.5, 90, 1.2);
+                    // drive towards warehouse
+                    drive.driveTime(0.9, -3, 1.2);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
@@ -102,9 +101,9 @@ public class AutoBlueHubDouble extends LinearOpMode {
                     robot.motorIntake.setPower(1);
 
                     // drive into the elements
-                    drive.driveTime(0.4, 0, 1);
+                    drive.driveTime(0.7, 2, 0.7);
 
-//                    sleep(1000);
+                    sleep(750);
 
                     // assume elements captured
                     // set the cup to an upright position
@@ -113,19 +112,19 @@ public class AutoBlueHubDouble extends LinearOpMode {
 
                     // Lift arm up
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONMID);
-                    robot.motorArm.setPower(0.4);
+                    robot.motorArm.setPower(0.55);
 
                     // set intake to spit out any scoring elements
                     robot.motorIntake.setPower(-1);
 
-                    // straighten robot out
-                    drive.driveTurn(90, 0.3);
+                    //rotate to 90
+                    drive.driveTurn(88, 0.4);
 
                     //strafe into the wall
-                    drive.driveTime(0.5, -90, 0.5);
+                    drive.driveTime(0.7, -90, 0.4);
 
                     // drive to scoring position
-                    drive.driveTime(0.8, 180, 2);
+                    drive.driveTime(0.9, 180, 1.4);
 
                     // turn off the intake
                     robot.motorIntake.setPower(0);
@@ -134,29 +133,35 @@ public class AutoBlueHubDouble extends LinearOpMode {
                     drive.driveTurn(0, 0.3);
 
                     // drive towards the hub
-                    drive.driveTime(0.5, 180, 0.9);
+                    drive.driveTime(0.6, 180, 0.7);
 
                     // move arm into scoring position
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
-                    robot.motorArm.setPower(0.4);
+                    robot.motorArm.setPower(0.5);
 
                     sleep(1000);
 
                     // return arm to stationary position
                     robot.motorArm.setTargetPosition(0);
-                    robot.motorArm.setPower(0.4);
+                    robot.motorArm.setPower(0.5);
 
                     // drive towards wall
-                    drive.driveTime(0.5, 0, 0.7);
+                    drive.driveTime(0.8, 0, 0.6);
 
                     // rotate towards warehouse
-                    drive.driveTurn(90, 0.3);
+                    drive.driveTurn(88, 0.3);
 
                     // strafe into the wall
-                    drive.driveTime(0.5, -90, 1);
+                    drive.driveTime(0.6, -90, 0.5);
+
+                    // rotate towards warehouse
+                    drive.driveTurn(88, 0.3);
+
+                    // turn on intake
+                    robot.motorIntake.setPower(1);
 
                     // drive towards warehouse
-                    drive.driveTime(0.8, 0, 1.5);
+                    drive.driveTime(0.8, 2, 1.5);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);

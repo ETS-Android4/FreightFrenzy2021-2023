@@ -1,22 +1,20 @@
 package org.firstinspires.ftc.teamcode.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Red Hub Duck", group = "Competition")
-@Disabled
+@Autonomous(name = "Blue Hub Duck v2", group = "Competition")
 
-public class AutoRedHubDuck extends LinearOpMode {
+public class AutoBlueHubDuckv2 extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
     private State state = State.RUN1;
 
-    public AutoRedHubDuck() {
+    public AutoBlueHubDuckv2() {
 
     }   // end of TestAuto constructor
 
@@ -56,11 +54,16 @@ public class AutoRedHubDuck extends LinearOpMode {
                     break;
 
                 case RUN1:
-                    // strafe into scoring position
-                    drive.driveTime(0.5, -90, 1);
+                  // sleep(7000);
 
-                    // drive to hub to score
-                    drive.driveTime(0.5, 180, 0.9);
+                    // forward into scoring position
+                    drive.driveTime(0.7, 180, 1.2);
+
+                    // turn towards hub
+                    drive.driveTurn(-90, 0.3);
+
+                    // drive towards hub
+                    drive.driveTime(0.5, 180, 0.4);
 
                     // score in the hub
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
@@ -72,38 +75,35 @@ public class AutoRedHubDuck extends LinearOpMode {
                     robot.motorArm.setTargetPosition(0);
                     robot.motorArm.setPower(0.4);
 
-//                    sleep(3000);
+                    sleep(1000);
 
-                    // drive towards the wall
-                    drive.driveTime(0.5, 0, 0.7);
+                    // turn to original position
+//                    drive.driveTurn(0, 0.3);
 
-                    // rotate towards the carousel
-                    drive.driveTurn(-90, 0.3);
+                    // strafe towards wall
+                    drive.driveTime(0.6, 90, 1.7);
 
-                    // strafe into the wall
-                    drive.driveTime(0.5, 90, 1);
+                    // strafe towards wall
+                    drive.driveTime(0.4, 90, .5);
 
-                    // strafe away from the wall
-                    drive.driveTime(0.5, -90, .9);
+                    // strafe away from wall
+                    drive.driveTime(0.6, -90, 0.6);
 
-//                    sleep(500);
+                    // drive towards carousel
+                    drive.driveTime(0.4, 0, 1.85);
+                    //drive.motorsOn(0.05, -0.05, 0.05, -0.05);
 
-                    // drive towards the turntable
-                    drive.driveTime(0.5, 180, 2.4);
-
-                    // strafe into the carousel
-                    drive.driveTime(0.2, 90, 0.3);
-
-                    // turn duck motor on
-                    robot.motorDuck.setPower(-robot.duckSpeed);
-
-                    // wait for the duck to drop off
-                    sleep(robot.autoSleepTime);
-                    drive.motorsHalt();
+                    // turn carousel on
+                    robot.motorDuck.setPower(0.4);
+                    sleep(7000);
                     robot.motorDuck.setPower(0);
 
-                    // park in storage
-                    drive.driveTime(0.5, -90, 1.25);
+                    // correct strafe angle
+                    drive.driveTurn(-90, 0.3);
+
+                    // strafe to storage
+                    drive.driveTime(0.42, -90, 1.2);
+                    drive.motorsHalt();
 
                     state = State.HALT;
 
@@ -127,10 +127,13 @@ public class AutoRedHubDuck extends LinearOpMode {
             }   // end of the switch state
         }   // end of if opModeIsActive()
 
+        // End the program
+        requestOpModeStop();
+
     }// end of runOpMode constructor
 
     enum State {
         TEST, PLACE_SE, RUN1, PARK, HALT;
     }   // end of enum State
 
-}   // end of class AutoBlueStorage
+}   // end of class AutoBlueHubDuck

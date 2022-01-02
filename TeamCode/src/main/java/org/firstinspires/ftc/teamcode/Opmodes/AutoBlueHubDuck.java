@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
 @Autonomous(name = "Blue Hub Duck", group = "Competition")
+@Disabled
 
 public class AutoBlueHubDuck extends LinearOpMode {
 

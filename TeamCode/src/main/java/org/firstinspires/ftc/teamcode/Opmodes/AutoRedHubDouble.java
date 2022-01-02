@@ -88,7 +88,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveTime(0.8, 90, 0.5);
 
                     // rotate towards warehouse
-//                    drive.driveTurn(-88, 0.3);
+                    drive.driveTurn(-88, 0.5);
 
                     // drive towards warehouse
                     drive.driveTime(0.9, -3, 1.2);
@@ -111,7 +111,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     // drive into the elements
                     drive.driveTime(0.7, -2, 0.7);
 
-                    sleep(500);
+                    sleep(750);
 
                     // assume elements captured
                     // set the cup to an upright position
@@ -157,7 +157,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveTime(0.8, 0, 0.6);
 
                     // rotate towards warehouse
-                    drive.driveTurn(-90, 0.3);
+                    drive.driveTurn(-88, 0.3);
 
                     // strafe into the wall
                     drive.driveTime(0.6, 90, 0.5);
