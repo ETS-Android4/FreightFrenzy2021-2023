@@ -63,7 +63,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 robot.motorRR.setPower(com.qualcomm.robotcore.util.Range.clip((v4), -1, 1));
 
                 // Control which direction is forward and which is backward from the driver POV
-                if (gamepad1.x && (currentTime.time() - buttonPress) > 0.3) {
+                if (gamepad1.y && (currentTime.time() - buttonPress) > 0.3) {
                     if (theta2 == 180) {
                         theta2 = 0;
                     } else {

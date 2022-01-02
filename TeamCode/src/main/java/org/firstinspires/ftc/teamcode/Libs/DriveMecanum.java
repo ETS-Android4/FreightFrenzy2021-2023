@@ -149,7 +149,7 @@ public class DriveMecanum {
         double Cp = 0.06;
         double Ci = 0.0003;
         double Cd = 0.0001;
-        double maxSpeed = 0.4;
+        double maxSpeed = 0.8;
         double rotationSpeed;
         double derivative = 0, deltaError, lastError = 0;
 
