@@ -54,7 +54,7 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     break;
 
                 case RUN1:
-                  // sleep(7000);
+//                  sleep(5000);
 
                     // forward into scoring position
                     drive.driveTime(0.7, 180, 1.2);
@@ -87,15 +87,17 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     drive.driveTime(0.4, 90, .5);
 
                     // strafe away from wall
-                    drive.driveTime(0.6, -90, 0.6);
+                    drive.driveTime(0.6, -90, 0.4);
 
                     // drive towards carousel
                     drive.driveTime(0.4, 0, 1.85);
                     //drive.motorsOn(0.05, -0.05, 0.05, -0.05);
 
+                    drive.motorsOn(-0.03, 0.03, -0.03, 0.03);
+
                     // turn carousel on
                     robot.motorDuck.setPower(0.4);
-                    sleep(7000);
+                    sleep(9000);
                     robot.motorDuck.setPower(0);
 
                     // correct strafe angle
