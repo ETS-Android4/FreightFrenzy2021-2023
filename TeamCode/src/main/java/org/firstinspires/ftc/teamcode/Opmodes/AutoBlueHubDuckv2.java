@@ -87,7 +87,7 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     drive.driveTime(0.4, 90, .5);
 
                     // strafe away from wall
-                    drive.driveTime(0.6, -90, 0.6);
+                    drive.driveTime(0.6, -90, 0.4);
 
                     // drive towards carousel
                     drive.driveTime(0.4, 0, 1.85);
@@ -102,7 +102,7 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     drive.driveTurn(-90, 0.3);
 
                     // strafe to storage
-                    drive.driveTime(0.42, -90, 1.2);
+                    drive.driveTime(0.42, -90, 1.4);
                     drive.motorsHalt();
 
                     state = State.HALT;
