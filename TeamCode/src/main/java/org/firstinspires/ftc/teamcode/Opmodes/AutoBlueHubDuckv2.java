@@ -102,7 +102,7 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     drive.driveTurn(-90, 0.3);
 
                     // strafe to storage
-                    drive.driveTime(0.42, -90, 1.4);
+                    drive.driveTime(0.42, -90, 1.3);
                     drive.motorsHalt();
 
                     state = State.HALT;

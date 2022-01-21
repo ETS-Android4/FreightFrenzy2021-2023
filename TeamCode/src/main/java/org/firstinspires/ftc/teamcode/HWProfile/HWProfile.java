@@ -35,7 +35,7 @@ public class HWProfile {
     final public int ARMPOSITIONDOWN = 0;
     final public int ARMPOSITIONMID = -490;
     final public int ARMPOSITIONHIGH = -1400;
-    final public int ARMPOSITIONSHARED = -2000;
+    final public int ARMPOSITIONSHARED = -1950;
 
 
     final public double DISTANCEPERROTATION = 4; // assuming inches

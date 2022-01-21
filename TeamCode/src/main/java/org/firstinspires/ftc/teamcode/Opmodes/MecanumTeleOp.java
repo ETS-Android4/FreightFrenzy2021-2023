@@ -100,6 +100,8 @@ public class MecanumTeleOp extends LinearOpMode {
                 targetPosition = robot.ARMPOSITIONMID;
             }else if(gamepad1.dpad_up || gamepad2.dpad_up){
                 targetPosition = robot.ARMPOSITIONHIGH;
+            }else if (gamepad1.x  || gamepad2.x ) {
+                targetPosition = robot.ARMPOSITIONSHARED;
             }
 
             if(robot.motorArm.getCurrentPosition() > -5 &&
