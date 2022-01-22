@@ -64,7 +64,7 @@ public class AutoBlueHubDouble extends LinearOpMode {
 
                     drive.motorsHalt();
 
-                    sleep(750);
+                    sleep(760);
 
                     // return arm to stationary position
                     robot.motorArm.setTargetPosition(0);
@@ -124,7 +124,7 @@ public class AutoBlueHubDouble extends LinearOpMode {
                     drive.driveTime(0.7, -90, 0.4);
 
                     // drive to scoring position
-                    drive.driveTime(0.9, 180, 1.4);
+                    drive.driveTime(0.9, 180, 1.41);
 
                     // turn off the intake
                     robot.motorIntake.setPower(0);

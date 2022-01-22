@@ -105,7 +105,7 @@ public class MecanumTeleOp extends LinearOpMode {
             }
 
             if(robot.motorArm.getCurrentPosition() > -5 &&
-                    robot.motorArm.getCurrentPosition() < 5){
+                    robot.motorArm.getCurrentPosition() < 2){
                 cupPosition = robot.INTAKECUPDOWN;
                 telemetry.addData("currentPosition >armpositiondown - 5","");
             }
@@ -117,19 +117,19 @@ public class MecanumTeleOp extends LinearOpMode {
             }
 
             if(robot.motorArm.getCurrentPosition() < -300 &&
-                    robot.motorArm.getCurrentPosition() > -700){
+                    robot.motorArm.getCurrentPosition() > -600){
                 cupPosition = robot.INTAKECUPUP;
                 telemetry.addData("Passing Intake","");
             }
 
-            if(robot.motorArm.getCurrentPosition() < -700 &&
-                    robot.motorArm.getCurrentPosition() > -900){
+            if(robot.motorArm.getCurrentPosition() < -600 &&
+                    robot.motorArm.getCurrentPosition() > -800){
                 cupPosition = robot.INTAKECUPINTERMED;
                 telemetry.addData("currentPosition >armpositionHigh","");
             }
 
-            if(robot.motorArm.getCurrentPosition() < -900 &&
-                    robot.motorArm.getCurrentPosition() > -1600){
+            if(robot.motorArm.getCurrentPosition() < -800 &&
+                    robot.motorArm.getCurrentPosition() > -1200){
                 cupPosition = robot.INTAKECUPHIGH;
                 telemetry.addData("currentPosition >armpositionHigh","");
             }

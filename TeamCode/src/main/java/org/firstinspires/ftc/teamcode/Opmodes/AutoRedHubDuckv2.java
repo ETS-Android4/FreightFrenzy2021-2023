@@ -79,7 +79,7 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
                     drive.driveTurn(0, 0.3);
 
                     // strafe towards wall
-                    drive.driveTime(0.52, 90, 1);
+                    drive.driveTime(0.52, 90, 1.2);
 
 
                     // drive towards carousel
@@ -92,7 +92,7 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
                     robot.motorDuck.setPower(0);
 
                     // drive to storage
-                    drive.driveTime(0.42, 180, 1.1);
+                    drive.driveTime(0.42, 180, 1.15);
                     drive.motorsHalt();
 
                     state = State.HALT;
