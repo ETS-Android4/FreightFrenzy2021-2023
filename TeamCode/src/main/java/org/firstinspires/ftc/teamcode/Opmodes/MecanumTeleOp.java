@@ -31,7 +31,7 @@ public class MecanumTeleOp extends LinearOpMode {
         telemetry.addData("Ready to Run: ","GOOD LUCK");
         telemetry.update();
 
-        boolean armReady=false;
+        boolean shippingElement=false;
         boolean armDeployed=false;
 
         waitForStart();
@@ -94,14 +94,20 @@ public class MecanumTeleOp extends LinearOpMode {
             if(gamepad1.dpad_down || gamepad2.dpad_down) {
                 targetPosition = robot.ARMPOSITIONDOWN;
                 robot.servoIntake.setPosition(robot.INTAKECUPUP);
+                shippingElement = false;
             } else if(gamepad1.dpad_right || gamepad2.dpad_right){
-                targetPosition = robot.ARMPOSITIONMID;
+                // Go after the TSE
+                targetPosition = robot.ARMPOSITIONSHARED;
+                shippingElement = false;
             }else if(gamepad1.dpad_left  || gamepad2.dpad_left) {
                 targetPosition = robot.ARMPOSITIONMID;
+                shippingElement = false;
             }else if(gamepad1.dpad_up || gamepad2.dpad_up){
                 targetPosition = robot.ARMPOSITIONHIGH;
-            }else if (gamepad1.x  || gamepad2.x ) {
-                targetPosition = robot.ARMPOSITIONSHARED;
+                shippingElement = false;
+            }else if (gamepad1.right_bumper  || gamepad2.right_bumper ) {
+                targetPosition = robot.ARMPOSITIONTSE;
+                shippingElement = true;
             }
 
             if(robot.motorArm.getCurrentPosition() > -5 &&
@@ -129,13 +135,18 @@ public class MecanumTeleOp extends LinearOpMode {
             }
 
             if(robot.motorArm.getCurrentPosition() < -800 &&
-                    robot.motorArm.getCurrentPosition() > -1200){
+                    robot.motorArm.getCurrentPosition() > -1200 && !shippingElement){
                 cupPosition = robot.INTAKECUPHIGH;
                 telemetry.addData("currentPosition >armpositionHigh","");
             }
 
-            if(robot.motorArm.getCurrentPosition() < -1700) {
+            if((robot.motorArm.getCurrentPosition() < -1700) && !shippingElement) {
                 cupPosition = robot.INTAKECUPSHARED;
+                telemetry.addData("currentPosition >armpositionShared + 100","");
+            }
+
+            if((robot.motorArm.getCurrentPosition() < -1700) && shippingElement) {
+                cupPosition = robot.INTAKECUPTSE;
                 telemetry.addData("currentPosition >armpositionShared + 100","");
             }
 
