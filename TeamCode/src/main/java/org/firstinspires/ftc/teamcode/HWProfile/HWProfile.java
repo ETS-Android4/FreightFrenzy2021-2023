@@ -27,7 +27,7 @@ public class HWProfile {
 
     final public double INTAKECUPDOWN = 0.59;
     final public double INTAKECUPMID = 0.45;
-    final public double INTAKECUPINTERMED = 0.30;
+    final public double INTAKECUPINTERMED = 0.35;
     final public double INTAKECUPHIGH = 0.17;
     final public double INTAKECUPSHARED = 0.0;
     final public double INTAKECUPTSE = 0.20;
@@ -37,7 +37,7 @@ public class HWProfile {
     final public int ARMPOSITIONMID = -490;
     final public int ARMPOSITIONHIGH = -1400;
     final public int ARMPOSITIONSHARED = -1950;
-    final public int ARMPOSITIONTSE = -2050;
+    final public int ARMPOSITIONTSE = -1961;
 
     final public double DISTANCEPERROTATION = 4; // assuming inches
 

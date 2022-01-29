@@ -91,7 +91,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveTurn(-88, 0.5);
 
                     // drive towards warehouse
-                    drive.driveTime(0.9, -3, 1.2);
+                    drive.driveTime(0.9, -4, 1.2);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
