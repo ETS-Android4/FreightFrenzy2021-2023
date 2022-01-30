@@ -105,7 +105,7 @@ public class MecanumTeleOp extends LinearOpMode {
             }else if(gamepad1.dpad_up || gamepad2.dpad_up){
                 targetPosition = robot.ARMPOSITIONHIGH;
                 shippingElement = false;
-            }else if (gamepad1.right_bumper  || gamepad2.right_bumper ) {
+            }else if (gamepad1.right_trigger > 0.5) {
                 targetPosition = robot.ARMPOSITIONTSE;
                 shippingElement = true;
             }
@@ -116,7 +116,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 telemetry.addData("currentPosition >armpositiondown - 5","");
             }
 
-            if(robot.motorArm.getCurrentPosition() < -10 &&
+            if(robot.motorArm.getCurrentPosition() < -7 &&
                     robot.motorArm.getCurrentPosition() > -200){
                 cupPosition = robot.INTAKECUPUP;
                 telemetry.addData("Passing Intake","");
