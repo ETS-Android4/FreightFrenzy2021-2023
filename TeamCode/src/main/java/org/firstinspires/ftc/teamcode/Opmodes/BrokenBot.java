@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 
 @TeleOp(name="Broken Bot Testing", group="Dev")
@@ -140,6 +141,11 @@ public class BrokenBot extends LinearOpMode{
                     robot.motorIntake.setPower(0);
                 }
 
+                telemetry.addData("deviceName",robot.sensorDistance.getDeviceName() );
+                telemetry.addData("range", String.format("%.01f mm", robot.sensorDistance.getDistance(DistanceUnit.MM)));
+                telemetry.addData("range", String.format("%.01f cm", robot.sensorDistance.getDistance(DistanceUnit.CM)));
+                telemetry.addData("range", String.format("%.01f m", robot.sensorDistance.getDistance(DistanceUnit.METER)));
+                telemetry.addData("range", String.format("%.01f in", robot.sensorDistance.getDistance(DistanceUnit.INCH)));
                 telemetry.addData("ArmEncoder", robot.motorArm.getCurrentPosition());
                 telemetry.addData("servoIntake Position = ", robot.servoIntake.getPosition());
                 telemetry.addData("motorRF", robot.motorRF.getCurrentPosition());

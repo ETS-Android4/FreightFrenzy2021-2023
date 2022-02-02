@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.HWProfile;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -21,6 +20,7 @@ public class HWProfile {
     public DcMotor motorIntake = null;
     public BNO055IMU imu = null;
     public Servo servoIntake = null;
+    public DistanceSensor sensorDistance;
 
     public final double duckSpeed=0.6;
     public final int autoSleepTime=5000;
@@ -30,14 +30,16 @@ public class HWProfile {
     final public double INTAKECUPINTERMED = 0.35;
     final public double INTAKECUPHIGH = 0.17;
     final public double INTAKECUPSHARED = 0.0;
-    final public double INTAKECUPTSE = 0.22;
+    final public double INTAKECUPTSELOW = 0.22;
+    final public double INTAKECUPTSEHIGH = 0.50;
     final public double INTAKEHIGHDUMP= 0.65;
     final public double INTAKECUPUP= 0.74;
     final public int ARMPOSITIONDOWN = 0;
     final public int ARMPOSITIONMID = -490;
     final public int ARMPOSITIONHIGH = -1400;
     final public int ARMPOSITIONSHARED = -1850;
-    final public int ARMPOSITIONTSE = -1900;
+    final public int ARMPOSITIONTSELOW = -1900;
+    final public int ARMPOSITIONTSEHIGH = -1400;
 
     final public double DISTANCEPERROTATION = 4; // assuming inches
 
@@ -54,6 +56,8 @@ public class HWProfile {
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
+
+//        Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor)sensorDistance;
 
         // Define and Initialize Motors
         motorLF = hwMap.get(DcMotor.class, "motorLF");
@@ -108,6 +112,7 @@ public class HWProfile {
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.initialize(parameters);
 
+        sensorDistance = hwMap.get(DistanceSensor.class, "sensorDistance");
     }
  }  // end of HWProfile Class
 
