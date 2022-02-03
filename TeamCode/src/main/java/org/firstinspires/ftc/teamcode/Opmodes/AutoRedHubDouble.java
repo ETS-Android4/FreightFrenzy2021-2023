@@ -13,7 +13,8 @@ public class AutoRedHubDouble extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
-    private State state = State.RUN1;
+    private State state = State.TEST;
+//    private State state = State.RUN1;
     private ElapsedTime runtime = new ElapsedTime();
 
     public AutoRedHubDouble() {
@@ -21,6 +22,7 @@ public class AutoRedHubDouble extends LinearOpMode {
     }   // end of AutoRedHubDouble constructor
 
     public void runOpMode() {
+        int hubLevel = 3;
         telemetry.addData("Robot State = ", "READY");
         telemetry.update();
 
@@ -47,7 +49,27 @@ public class AutoRedHubDouble extends LinearOpMode {
         while(opModeIsActive()) {
             switch (state) {
                 case TEST:
+                    if(drive.tseDistance() < robot.TSEDISTANCE) {
+                        hubLevel = 2;
+                        drive.driveTime(0.4, 90, 1);
+                    } else {
+                        // strafe to the left towards the hub, stopping to check the next position
+                        drive.driveTime(0.4, 90, 0.5);
+                        sleep(300);
+                        if(drive.tseDistance() < robot.TSEDISTANCE) {
+                            hubLevel = 3;
+                        } else {
+                            hubLevel = 1;
+                        } // end of if(drive.tseDistance()
+                    } // end of if(drive.tseDistance() else
 
+                    drive.setArmLevel(hubLevel);
+                    telemetry.addData("Set arm to Level = ", hubLevel);
+                    telemetry.update();
+                    sleep(5000);
+                    drive.dumpCup();
+                    drive.resetArm();
+                    state = State.HALT;
                     break;
 
                 case RUN1:

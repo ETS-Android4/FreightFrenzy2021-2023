@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 
-@TeleOp(name="Broken Bot Testing", group="Dev")
-//@Disabled
+@TeleOp(name="Bot Testing", group="Dev")
 
 public class BrokenBot extends LinearOpMode{
 
@@ -53,6 +52,9 @@ public class BrokenBot extends LinearOpMode{
                 robot.motorLR.setPower(com.qualcomm.robotcore.util.Range.clip((v3 + lrValue), -1, 1));
                 robot.motorRR.setPower(com.qualcomm.robotcore.util.Range.clip((v4 + rrValue), -1, 1));
 
+                /*
+                 * Arm control presets
+                 */
                 if (gamepad2.dpad_down) {
                     robot.motorLF.setPower(1);
                     telemetry.addData("Motor = ", "MotorLF");

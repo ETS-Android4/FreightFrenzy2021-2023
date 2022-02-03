@@ -92,6 +92,9 @@ public class MecanumTeleOp extends LinearOpMode {
  }
  **/
 
+            /***********************
+             * Arm control presets *
+             ***********************/
             if(gamepad1.dpad_down || gamepad2.dpad_down) {
                 targetPosition = robot.ARMPOSITIONDOWN;
                 robot.servoIntake.setPosition(robot.INTAKECUPUP);
@@ -99,18 +102,20 @@ public class MecanumTeleOp extends LinearOpMode {
             } else if(gamepad1.dpad_right || gamepad2.dpad_right){
                 // Go after the TSE
                 targetPosition = robot.ARMPOSITIONSHARED;
-                shippingElement = false;
             }else if(gamepad1.dpad_left  || gamepad2.dpad_left) {
                 targetPosition = robot.ARMPOSITIONMID;
                 shippingElement = false;
             }else if(gamepad1.dpad_up || gamepad2.dpad_up){
                 targetPosition = robot.ARMPOSITIONHIGH;
-                shippingElement = false;
             }else if (gamepad1.right_trigger > 0.5) {
                 targetPosition = robot.ARMPOSITIONTSELOW;
                 shippingElement = true;
             }
 
+
+            /*
+             * Arm controls
+             */
             if(!shippingElement) {
                 if (robot.motorArm.getCurrentPosition() > -5 &&
                         robot.motorArm.getCurrentPosition() < 2) {

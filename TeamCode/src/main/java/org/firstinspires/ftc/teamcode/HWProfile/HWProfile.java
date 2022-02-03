@@ -34,13 +34,18 @@ public class HWProfile {
     final public double INTAKECUPTSEHIGH = 0.50;
     final public double INTAKEHIGHDUMP= 0.65;
     final public double INTAKECUPUP= 0.74;
+
     final public int ARMPOSITIONDOWN = 0;
     final public int ARMPOSITIONMID = -490;
     final public int ARMPOSITIONHIGH = -1400;
     final public int ARMPOSITIONSHARED = -1850;
     final public int ARMPOSITIONTSELOW = -1900;
     final public int ARMPOSITIONTSEHIGH = -1400;
+    final public int ARMPOSITIONLEVEL1 = -1500;
+    final public int ARMPOSITIONLEVEL2 = -1500;
+    final public int ARMPOSITIONLEVEL3 = -1500;
 
+    final public double TSEDISTANCE = 1;
     final public double DISTANCEPERROTATION = 4; // assuming inches
 
     /* local OpMode members. */

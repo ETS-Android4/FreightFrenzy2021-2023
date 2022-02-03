@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 
 public class DriveMecanum {
@@ -237,6 +238,89 @@ public class DriveMecanum {
         robot.motorLR.setPower(powerLR);
         robot.motorRR.setPower(powerRR);
     }
+
+    /*
+     * method:      setArmLevel
+     * Function:    sets the arm to the appropriate height for scoring in the hub
+     * int level
+     */
+    public void setArmLevel(int level){
+        double cupPosition = robot.INTAKECUPUP;
+        int targetPosition = 0;
+
+        if (level == 1){
+            targetPosition = robot.ARMPOSITIONLEVEL1;
+        } else if (level == 2) {
+            targetPosition = robot.ARMPOSITIONLEVEL2;
+        } else {
+            targetPosition = robot.ARMPOSITIONLEVEL3;
+        } // end of if (level ==1)
+
+        robot.servoIntake.setPosition(cupPosition);
+        robot.motorArm.setTargetPosition(targetPosition);
+        robot.motorArm.setPower(-0.5);
+        while (robot.motorArm.getCurrentPosition() > (targetPosition + 10)) {
+            if (robot.motorArm.getCurrentPosition() > -5 &&
+                    robot.motorArm.getCurrentPosition() < 2) {
+                cupPosition = robot.INTAKECUPDOWN;
+            }
+
+            if (robot.motorArm.getCurrentPosition() < -7 &&
+                    robot.motorArm.getCurrentPosition() > -200) {
+                cupPosition = robot.INTAKECUPUP;
+            }
+
+            if (robot.motorArm.getCurrentPosition() < -300 &&
+                    robot.motorArm.getCurrentPosition() > -800) {
+                cupPosition = robot.INTAKECUPUP;
+            }
+
+            if (robot.motorArm.getCurrentPosition() < -800 &&
+                    robot.motorArm.getCurrentPosition() > -1050) {
+                cupPosition = robot.INTAKECUPINTERMED;
+            }
+
+            if (robot.motorArm.getCurrentPosition() < -1150 &&
+                    robot.motorArm.getCurrentPosition() > -1200) {
+                cupPosition = robot.INTAKECUPHIGH;
+            }
+
+            if (robot.motorArm.getCurrentPosition() < -1150 &&
+                    robot.motorArm.getCurrentPosition() > -1200) {
+                cupPosition = robot.INTAKECUPHIGH;
+            }
+
+            if (robot.motorArm.getCurrentPosition() < -1600) {
+                cupPosition = robot.INTAKECUPSHARED;
+            }
+            robot.servoIntake.setPosition(cupPosition);
+        }   // end of while(robot.motorArm...
+    }   // end of method setLevelArm()
+
+    /*
+     * Method dumpCup
+     */
+    public void dumpCup(){
+        robot.servoIntake.setPosition(robot.INTAKEHIGHDUMP);
+        opMode.sleep(300);
+        robot.servoIntake.setPosition(robot.INTAKECUPHIGH);
+    }   // end of method dumpCup()
+
+    public double tseDistance (){
+        return robot.sensorDistance.getDistance(DistanceUnit.METER);
+    }
+    /*
+     * Method resetArm()
+     */
+    public void resetArm() {
+        double cupPosition = robot.INTAKECUPDOWN;
+        int targetPosition = robot.ARMPOSITIONDOWN;
+        robot.servoIntake.setPosition(cupPosition);
+        robot.motorArm.setTargetPosition(targetPosition);
+        robot.motorArm.setPower(-0.5);
+        opMode.sleep(500);
+    }
+
     /*
      * Method updateValues
      */
