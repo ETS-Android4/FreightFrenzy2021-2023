@@ -4,16 +4,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Red Hub Bonus", group = "Competition")
+@Autonomous(name = "Red Warehouse Bonus", group = "Competition")
 
 public class AutoRedHubDouble extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
-    private State state = State.TEST;
+    private State state = State.DETECT_TSE;
+    private boolean isRunning = true;
 //    private State state = State.RUN1;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -23,6 +25,7 @@ public class AutoRedHubDouble extends LinearOpMode {
 
     public void runOpMode() {
         int hubLevel = 3;
+        telemetry.addData("Setup for Warehouse ", "Warehouse Side");
         telemetry.addData("Robot State = ", "READY");
         telemetry.update();
 
@@ -41,6 +44,20 @@ public class AutoRedHubDouble extends LinearOpMode {
         telemetry.addData("Robot state = ", "INITIALIZED");
         telemetry.update();
 
+        while(!opModeIsActive() && isRunning){
+            telemetry.addData("PRESS X => ","TO ABORT PROGRAM");
+            if (robot.sensorDistance.getDistance(DistanceUnit.CM) < robot.TSEDISTANCE) {
+                telemetry.addData("TSE = ", "DETECTED");
+            } else {
+                telemetry.addData("TSE = ", "NOT DETECTED");
+            }
+            telemetry.update();
+
+            if(gamepad1.x || gamepad2.x){
+                isRunning = false;
+                requestOpModeStop();
+            }
+        }
         waitForStart();
 
         // reset the runtime clock
@@ -48,7 +65,7 @@ public class AutoRedHubDouble extends LinearOpMode {
 
         while(opModeIsActive()) {
             switch (state) {
-                case TEST:
+                case DETECT_TSE:
                     if(drive.tseDistance() < robot.TSEDISTANCE) {
                         hubLevel = 2;
                         drive.driveTime(0.4, 90, 1);
@@ -69,7 +86,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     sleep(5000);
                     drive.dumpCup();
                     drive.resetArm();
-                    state = State.HALT;
+                    state = State.RUN1;
                     break;
 
                 case RUN1:
@@ -219,7 +236,7 @@ public class AutoRedHubDouble extends LinearOpMode {
     }// end of runOpMode constructor
 
     enum State {
-        TEST, PLACE_SE, RUN1, BONUS, HALT
+        TEST, DETECT_TSE, PLACE_SE, RUN1, BONUS, HALT
     }   // end of enum State
 
 }   // end of class AutoRedHubDouble

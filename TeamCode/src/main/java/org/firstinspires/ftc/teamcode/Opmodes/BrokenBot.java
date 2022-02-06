@@ -154,6 +154,11 @@ public class BrokenBot extends LinearOpMode{
                 telemetry.addData("motorLF", robot.motorLF.getCurrentPosition());
                 telemetry.addData("motorRR", robot.motorRR.getCurrentPosition());
                 telemetry.addData("motorLR", robot.motorLR.getCurrentPosition());
+                if (robot.sensorDistance.getDistance(DistanceUnit.CM) < robot.TSEDISTANCE) {
+                    telemetry.addData("TSE = ", "DETECTED");
+                } else {
+                    telemetry.addData("TSE = ", "NOT DETECTED");
+                }
                 telemetry.update();
                 // Send telemetry message to signify robot running;
 

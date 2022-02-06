@@ -307,7 +307,7 @@ public class DriveMecanum {
     }   // end of method dumpCup()
 
     public double tseDistance (){
-        return robot.sensorDistance.getDistance(DistanceUnit.METER);
+        return robot.sensorDistance.getDistance(DistanceUnit.CM);
     }
     /*
      * Method resetArm()

@@ -45,7 +45,7 @@ public class HWProfile {
     final public int ARMPOSITIONLEVEL2 = -1500;
     final public int ARMPOSITIONLEVEL3 = -1500;
 
-    final public double TSEDISTANCE = 1;
+    final public double TSEDISTANCE = 50;       // distance in CM
     final public double DISTANCEPERROTATION = 4; // assuming inches
 
     /* local OpMode members. */
