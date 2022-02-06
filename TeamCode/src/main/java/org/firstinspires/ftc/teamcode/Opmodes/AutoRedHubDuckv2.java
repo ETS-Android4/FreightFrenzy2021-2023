@@ -19,6 +19,9 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
     }   // end of TestAuto constructor
 
     public void runOpMode() {
+        int hubLevel = 3;
+        int forwardDistance = 0;
+
         telemetry.addData("Robot State = ", "READY");
         telemetry.update();
 
@@ -49,38 +52,65 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
 
                     break;
 
-                case PLACE_SE:
+                case DETECT_TSE:
+                    if(drive.tseDistance() < robot.TSEDISTANCE) {
+                        hubLevel = 2;
+                        // strafe to position in front of the hub
+                        drive.driveTime(0.4, 90, 1);
+                        forwardDistance = 10;       // how far to move forward to score
+                    } else {
+                        // strafe to the left towards the hub, stopping to check the next position
+                        drive.driveTime(0.4, 90, 0.5);
 
-                    break;
+                        // pause to allow time to determine if a TSE is present
+                        sleep(300);
+                        if(drive.tseDistance() < robot.TSEDISTANCE) {
+                            hubLevel = 3;
+                            forwardDistance = 14;       // how far to move forward to score
+                        } else {
+                            hubLevel = 1;
+                            forwardDistance = 10;       // how far to move forward to score
+                        } // end of if(drive.tseDistance()
 
-                case RUN1:
+                        // strafe into position to place cube in the hub.
+//                        drive.driveTime(0.4, -90, 0.5);
+                    } // end of if(drive.tseDistance() else
+
+                    drive.setArmLevel(hubLevel);
+                    telemetry.addData("Set arm to Level = ", hubLevel);
+                    telemetry.update();
+                    state = State.SCORE_TSE;
+
+                case SCORE_TSE:
+
                     // forward into scoring position
                     drive.driveTime(0.7, 180, 1.2);
 
                     // turn towards hub
                     drive.driveTurn(90, 0.3);
 
-                    // drive towards hub
-                    drive.driveTime(0.5, 180, 0.4);
+                    // drive forward to position to place the cube
+                    drive.driveStraight(0.4, forwardDistance);
 
-                    // score in the hub
-                    robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
-                    robot.motorArm.setPower(0.4);
+                    // place the cube in the correct level
+                    drive.dumpCup();
+                    sleep(500); // wait for the block to dump
 
-                    sleep(2000);
+                    // return to the starting position
+                    drive.driveStraight(0.4, -forwardDistance);
 
-                    // reset the arm to normal position
-                    robot.motorArm.setTargetPosition(0);
-                    robot.motorArm.setPower(0.4);
+                    // reset the arm to starting position
+                    drive.resetArm();
 
-                    sleep(1000);
+                    state = State.RUN1;
+                    break;
 
+                case RUN1:
                     // turn to original position
                     drive.driveTurn(0, 0.3);
 
                     // strafe towards wall
                     drive.driveTime(0.52, 90, 1.2);
-
 
                     // drive towards carousel
                     drive.driveTime(0.5, 0, 1.7);
@@ -91,15 +121,14 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
                     sleep(10000);
                     robot.motorDuck.setPower(0);
 
-                    // drive to storage
-                    drive.driveTime(0.42, 180, 1.15);
-                    drive.motorsHalt();
-
-                    state = State.HALT;
+                    state = State.PARK;
 
                     break;
 
                 case PARK:
+                    // drive to storage
+                    drive.driveTime(0.42, 180, 1.15);
+                    drive.motorsHalt();
 
                     state = State.HALT;
 
@@ -120,7 +149,7 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
     }// end of runOpMode constructor
 
     enum State {
-        TEST, PLACE_SE, RUN1, PARK, HALT;
+        TEST, DETECT_TSE, SCORE_TSE, RUN1, PARK, HALT;
     }   // end of enum State
 
 }   // end of class AutoBlueStorage

@@ -25,6 +25,8 @@ public class AutoRedHubDouble extends LinearOpMode {
 
     public void runOpMode() {
         int hubLevel = 3;
+        double forwardDistance =0;
+
         telemetry.addData("Setup for Warehouse ", "Warehouse Side");
         telemetry.addData("Robot State = ", "READY");
         telemetry.update();
@@ -68,58 +70,48 @@ public class AutoRedHubDouble extends LinearOpMode {
                 case DETECT_TSE:
                     if(drive.tseDistance() < robot.TSEDISTANCE) {
                         hubLevel = 2;
+                        // strafe to position in front of the hub
                         drive.driveTime(0.4, 90, 1);
+                        forwardDistance = 10;       // how far to move forward to score
                     } else {
                         // strafe to the left towards the hub, stopping to check the next position
                         drive.driveTime(0.4, 90, 0.5);
+
+                        // pause to allow time to determine if a TSE is present
                         sleep(300);
                         if(drive.tseDistance() < robot.TSEDISTANCE) {
                             hubLevel = 3;
+                            forwardDistance = 14;       // how far to move forward to score
                         } else {
                             hubLevel = 1;
+                            forwardDistance = 10;       // how far to move forward to score
                         } // end of if(drive.tseDistance()
+
+                        // strafe into position to place cube in the hub.
+                        drive.driveTime(0.4, 90, 0.5);
                     } // end of if(drive.tseDistance() else
 
                     drive.setArmLevel(hubLevel);
                     telemetry.addData("Set arm to Level = ", hubLevel);
                     telemetry.update();
-                    sleep(5000);
+
+                    // drive forward to position to place the cube
+                    drive.driveStraight(0.4, forwardDistance);
+
+                    // place the cube in the correct level
                     drive.dumpCup();
+                    sleep(500); // wait for the block to dump
+
+                    // return to the starting position
+                    drive.driveStraight(0.4, (-forwardDistance + 3));
+
+                    // reset the arm to starting position
                     drive.resetArm();
+
                     state = State.RUN1;
                     break;
 
                 case RUN1:
-                    // Pause for alliance partner
-//                    sleep(5000);
-
-                    // move arm into scoring position
-                    robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
-                    robot.motorArm.setPower(0.55);
-
-                    // strafe towards hub
-//                    drive.driveTime(0.8, 90, 0.7);
-
-                    // drive towards the hub
-                    drive.motorsOn(-0.8, -0.8, -0.8, -0.8);
-//                    drive.driveTime(0.8, 180, 0.6);
-
-                    sleep(600);
-
-//                    sleep(600);
-                    drive.motorsHalt();
-
-                    sleep(750);
-
-                    // return arm to stationary position
-                    robot.motorArm.setTargetPosition(0);
-                    robot.motorArm.setPower(0.55);
-
-//                    sleep(1000);
-
-                    // drive towards wall
-                    drive.driveTime(0.9, 0, 0.4);
-
                     // rotate towards warehouse
                     drive.driveTurn(-88, 0.6);
 
@@ -130,7 +122,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveTurn(-88, 0.5);
 
                     // drive towards warehouse
-                    drive.driveTime(0.9, -4, 1.2);
+                    drive.driveTime(0.7, -4, 1.4);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
@@ -236,7 +228,7 @@ public class AutoRedHubDouble extends LinearOpMode {
     }// end of runOpMode constructor
 
     enum State {
-        TEST, DETECT_TSE, PLACE_SE, RUN1, BONUS, HALT
+        TEST, DETECT_TSE, RUN1, BONUS, HALT
     }   // end of enum State
 
 }   // end of class AutoRedHubDouble

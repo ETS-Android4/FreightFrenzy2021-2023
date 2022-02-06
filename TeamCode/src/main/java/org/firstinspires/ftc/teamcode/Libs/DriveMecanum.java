@@ -297,6 +297,93 @@ public class DriveMecanum {
         }   // end of while(robot.motorArm...
     }   // end of method setLevelArm()
 
+    public void driveStraight(double power, double distance) {
+        boolean active = true;
+
+        double lfStart = 0;
+        double lrStart = 0;
+        double rfStart = 0;
+        double rrStart = 0;
+        double v1 = 0;
+        double v2 = 0;
+        double v3 = 0;
+        double v4 = 0;
+        double coastMinimum = 5;
+        double coastDistance = .8;
+        double coastPower = .75;
+
+        lfStart = robot.motorLF.getCurrentPosition();
+        lrStart = robot.motorLR.getCurrentPosition();
+        rfStart = robot.motorRF.getCurrentPosition();
+        rrStart = robot.motorRR.getCurrentPosition();
+
+        while(opMode.opModeIsActive() && active) {
+
+            /*
+             * Limit that value of the drive motors so that the power does not exceed 100%
+             */
+            v1 = Range.clip(power, -1,1);
+            v2 = Range.clip(power, -1,1);
+            v3 = Range.clip(power, -1,1);
+            v4 = Range.clip(power, -1,1);
+
+            /*
+             * Apply power to the drive wheels
+             */
+
+            if(distance*coastDistance < coastMinimum) {
+                if(distance-coastMinimum<=calcDistance(rfStart, rrStart, lfStart, lrStart)){
+                    v1 *=0.65;
+                    v2 *=0.65;
+                    v3 *=0.65;
+                    v4 *=0.65;
+                }
+            }else {
+                if (distance * coastDistance <= calcDistance(rfStart, rrStart, lfStart, lrStart)) {
+                    v1 *= coastPower;
+                    v2 *= coastPower;
+                    v3 *= coastPower;
+                    v4 *= coastPower;
+                }
+            }
+            setDrivePower(v1, v2, v3, v4);
+            opMode.telemetry.addData("LF Start = ", lfStart);
+            opMode.telemetry.addData("Distance = ", distance);
+            opMode.telemetry.addData("Calculated Distance = ", calcDistance(rfStart, rrStart, lfStart, lrStart));
+            opMode.telemetry.update();
+
+
+            if(calcDistance(rfStart, rrStart, lfStart, lrStart) >= distance) active = false;
+            opMode.idle();
+
+        }   // end of while loop
+
+        motorsHalt();
+
+    } // close driveStraight method
+
+    /**
+     * Method: calcDistance
+     * @param r1Start   - Right Front starting encoder value
+     * @param r2Start   - Right Rear starting encoder value
+     * @param l1Start   - Left Front starting encoder value
+     * @param l2Start   - Left Rear starting encoder value
+     */
+    public double calcDistance(double r1Start, double r2Start, double l1Start, double l2Start){
+
+        double distanceTraveled = 0;
+        double r1Encoder = robot.motorRF.getCurrentPosition();;
+        double r2Encoder = robot.motorRR.getCurrentPosition();;
+        double l1Encoder = robot.motorLF.getCurrentPosition();;
+        double l2Encoder = robot.motorLR.getCurrentPosition();
+
+        distanceTraveled = ((Math.abs(r1Start - r1Encoder) + Math.abs(r2Start - r2Encoder)
+                + Math.abs(l1Start-l1Encoder) + Math.abs(l2Start - l2Encoder)) / 4) / (robot.DRIVE_TICKS_PER_INCH);
+
+        return Math.abs(distanceTraveled);
+    }  //close calcDistance
+
+
     /*
      * Method dumpCup
      */
