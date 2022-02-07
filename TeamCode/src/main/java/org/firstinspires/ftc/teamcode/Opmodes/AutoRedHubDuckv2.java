@@ -98,8 +98,9 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
                     // drive forward to avoid hitting the wall
                     drive.driveStraight(-0.4, 4);
 
-                    drive.setArmLevel(hubLevel);
-                    telemetry.addData("Set arm to Level = ", hubLevel);
+                    // raise the arm above the TSE to drive forward
+                    drive.setArmLevel(3);
+                    telemetry.addData("Set arm to Level = ", "3");
                     telemetry.update();
                     state = State.SCORE_TSE;
 
@@ -109,6 +110,9 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
 
                     // turn towards hub
                     drive.driveTurn(90, 0.3);
+
+                    // set the arm to the correct height to place on the hub
+                    drive.setArmLevel(hubLevel);
 
                     // drive forward to position to place the cube
                     drive.driveStraight(-0.4, forwardDistance);
