@@ -1,22 +1,24 @@
-package org.firstinspires.ftc.teamcode.Opmodes;
+package org.firstinspires.ftc.teamcode.Deprecated;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Blue Storage", group = "Competition")
+@Autonomous(name = "Blue Hub Warehouse", group = "Competition")
+@Disabled
 
-public class AutoBlueStorage extends LinearOpMode {
+public class AutoBlueHub extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
     private State state = State.RUN1;
 
-    public AutoBlueStorage() {
+    public AutoBlueHub() {
 
-    }   // end of TestAuto constructor
+    }   // end of AutoBlueHub constructor
 
     public void runOpMode() {
         telemetry.addData("Robot State = ", "READY");
@@ -32,10 +34,7 @@ public class AutoBlueStorage extends LinearOpMode {
          */
         DriveMecanum drive = new DriveMecanum(robot, opMode);
 
-        /*
-         * Calibrate / initialize the game sensor
-         */
-
+        robot.servoIntake.setPosition(robot.INTAKECUPUP);
         telemetry.addData("Z Value = ", drive.getZAngle());
         telemetry.addData("Robot state = ", "INITIALIZED");
         telemetry.update();
@@ -48,28 +47,42 @@ public class AutoBlueStorage extends LinearOpMode {
 
                     break;
 
-                case PLACE_SE:
-
-                    break;
-
                 case RUN1:
                     // strafe away from the wall
-                    drive.driveTime(.5, -90, 0.5);
+                    sleep(5000);
 
-                    sleep(500);
+                    // strafe to scoring position
+                    drive.driveTime(0.5, -90, 1);
 
-                    // drive towards the turntable
-                    drive.driveTime(0.5, 0, 1.5);
+                    // drive towards the alliance hub
+                    drive.driveTime(.5, 180, 0.9);
 
-                    drive.driveTime(0.2, 90, .25);
+                    // score the shipping element into the alliance hub
+                    robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
+                    robot.motorArm.setPower(0.4);
 
-                    // turn duck motor on
-                    robot.motorDuck.setPower(robot.duckSpeed);
-                    sleep(robot.autoSleepTime);
-                    robot.motorDuck.setPower(0);
+                    sleep(2000);
 
-                    // park in storage
-                    drive.driveTime(.5, -90, 1.15);
+                    // return the arm to ready position
+                    robot.motorArm.setTargetPosition(-10);
+                    robot.motorArm.setPower(0.4);
+
+                    sleep(1000);
+
+                    // drive towards the outside wall
+                    drive.driveTime(0.5, 0, .9);
+
+                    // turn towards the warehouse
+                    drive.driveTurn(90, 0.3);
+
+                    // strafe into the wall
+                    drive.driveTime(.5, -90, 1);
+
+                    // drive towards the warehouse
+                    drive.driveTime(.5, 0, 2.3);
+
+                    // strafe from the wall to make room for another bot to park
+                    drive.driveTime(0.5, 90, 1.2);
 
                     state = State.HALT;
 
@@ -91,7 +104,7 @@ public class AutoBlueStorage extends LinearOpMode {
 
                     break;
             }   // end of the switch state
-        }   // end of if opModeIsActive()
+        }   // end of while opModeIsActive()
 
         // End the program
         requestOpModeStop();
@@ -99,7 +112,7 @@ public class AutoBlueStorage extends LinearOpMode {
     }// end of runOpMode constructor
 
     enum State {
-        TEST, PLACE_SE, RUN1, PARK, HALT;
+        TEST, PLACE_SE, RUN1, PARK, HALT
     }   // end of enum State
 
 }   // end of class AutoBlueStorage

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Red Warehouse Bonus", group = "Competition")
+@Autonomous(name = "Red Warehouse - STATE", group = "Competition")
 
 public class AutoRedHubDouble extends LinearOpMode {
 
@@ -16,7 +16,6 @@ public class AutoRedHubDouble extends LinearOpMode {
     private LinearOpMode opMode = this;
     private State state = State.DETECT_TSE;
     private boolean isRunning = true;
-//    private State state = State.RUN1;
     private ElapsedTime runtime = new ElapsedTime();
 
     public AutoRedHubDouble() {
@@ -26,10 +25,6 @@ public class AutoRedHubDouble extends LinearOpMode {
     public void runOpMode() {
         int hubLevel = 3;
         double forwardDistance =0;
-
-        telemetry.addData("Setup for Warehouse ", "Warehouse Side");
-        telemetry.addData("Robot State = ", "READY");
-        telemetry.update();
 
         /*
          * Setup the initial state of the robot
@@ -44,15 +39,19 @@ public class AutoRedHubDouble extends LinearOpMode {
         robot.servoIntake.setPosition(robot.INTAKECUPUP);
 
         while(!opModeIsActive() && isRunning){
-            telemetry.addData("Robot state = ", "INITIALIZED");
-            telemetry.addData("PRESS X => ","TO ABORT PROGRAM");
-            telemetry.addData(" => ","");
-            telemetry.addData(" => Z Value = ", drive.getZAngle());
-            telemetry.addData(" => Distance Value = ", drive.tseDistance());
+            telemetry.addData("Side of Field => ", "WAREHOUSE");
+            telemetry.addData("Alliance      => ", "RED");
+            telemetry.addData("Robot state   => ", "INITIALIZED");
+            telemetry.addData("              => ", "");
+            telemetry.addData("PRESS X       => ","TO ABORT PROGRAM");
+            telemetry.addData("              => ","");
+            telemetry.addData(" Z Value      => ", drive.getZAngle());
+            telemetry.addData("Distance      => ", drive.tseDistance());
+            telemetry.addData("              => ","");
             if (robot.sensorDistance.getDistance(DistanceUnit.CM) < robot.TSEDISTANCE) {
-                telemetry.addData("TSE = ", "DETECTED");
+                telemetry.addData("TSE   => ", "DETECTED");
             } else {
-                telemetry.addData("TSE = ", "NOT DETECTED");
+                telemetry.addData("TSE   => ", "NOT DETECTED");
             }
             telemetry.update();
 
@@ -60,7 +59,8 @@ public class AutoRedHubDouble extends LinearOpMode {
                 isRunning = false;
                 requestOpModeStop();
             }
-        }
+        }   // end of while(!opModeIsActive() && isRunning)
+
         waitForStart();
 
         // reset the runtime clock
@@ -156,7 +156,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     // drive into the elements
                     drive.driveTime(0.7, -2, 0.7);
 
-                    sleep(750);
+                    sleep(500);
 
                     // assume elements captured
                     // set the cup to an upright position

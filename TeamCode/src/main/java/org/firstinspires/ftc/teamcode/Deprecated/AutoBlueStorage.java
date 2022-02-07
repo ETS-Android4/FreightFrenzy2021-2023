@@ -1,20 +1,22 @@
-package org.firstinspires.ftc.teamcode.Opmodes;
+package org.firstinspires.ftc.teamcode.Deprecated;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
-@Autonomous(name = "Red Hub Warehouse", group = "Competition")
+@Autonomous(name = "Blue Storage", group = "Competition")
+@Disabled
 
-public class AutoRedHub extends LinearOpMode {
+public class AutoBlueStorage extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
     private LinearOpMode opMode = this;
     private State state = State.RUN1;
 
-    public AutoRedHub() {
+    public AutoBlueStorage() {
 
     }   // end of TestAuto constructor
 
@@ -36,7 +38,6 @@ public class AutoRedHub extends LinearOpMode {
          * Calibrate / initialize the game sensor
          */
 
-        robot.servoIntake.setPosition(robot.INTAKECUPUP);
         telemetry.addData("Z Value = ", drive.getZAngle());
         telemetry.addData("Robot state = ", "INITIALIZED");
         telemetry.update();
@@ -55,42 +56,22 @@ public class AutoRedHub extends LinearOpMode {
 
                 case RUN1:
                     // strafe away from the wall
-//                    sleep(5000);
+                    drive.driveTime(.5, -90, 0.5);
 
-                    // strafe into scoring position
-                    drive.driveTime(0.5, 90, 1);
+                    sleep(500);
 
-                    // drive forward to score in the alliance hub
-                    drive.driveTime(0.5, 180, 0.9);
+                    // drive towards the turntable
+                    drive.driveTime(0.5, 0, 1.5);
 
-//                    sleep(500);
+                    drive.driveTime(0.2, 90, .25);
 
-                    // put arm up to score the shipping element
-                    robot.motorArm.setTargetPosition(robot.ARMPOSITIONHIGH - 80);
-                    robot.motorArm.setPower(0.4);
+                    // turn duck motor on
+                    robot.motorDuck.setPower(robot.duckSpeed);
+                    sleep(robot.autoSleepTime);
+                    robot.motorDuck.setPower(0);
 
-                    sleep(2000);
-
-                    // return arm to ready position
-                    robot.motorArm.setTargetPosition(-10);
-                    robot.motorArm.setPower(0.4);
-
-                    sleep(1000);
-
-                    // drive towards the wall
-                    drive.driveTime(0.5, 0, .7);
-
-                    // rotate towards the warehouse
-                    drive.driveTurn(-90, 0.3);
-
-                    // strafe into the wall
-                    drive.driveTime(0.5, 90, 1);
-
-                    // drive into the warehouse
-                    drive.driveTime(0.5, 0, 2.2);
-
-                    // strafe out of the way for another bot to park in the warehouse
-                    drive.driveTime(0.5, -90, 1.2);
+                    // park in storage
+                    drive.driveTime(.5, -90, 1.15);
 
                     state = State.HALT;
 
@@ -112,7 +93,8 @@ public class AutoRedHub extends LinearOpMode {
 
                     break;
             }   // end of the switch state
-        }   // end of while opModeIsActive()
+        }   // end of if opModeIsActive()
+
         // End the program
         requestOpModeStop();
 
