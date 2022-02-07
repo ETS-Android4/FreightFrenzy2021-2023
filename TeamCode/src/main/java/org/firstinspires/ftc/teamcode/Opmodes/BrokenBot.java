@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
+import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
 @TeleOp(name="Bot Testing", group="Dev")
 
@@ -13,11 +14,13 @@ public class BrokenBot extends LinearOpMode{
     public double lfValue = 0, lrValue = 0, rfValue = 0, rrValue = 0;
 
     /* Declare OpMode members. */
-        HWProfile robot           = new HWProfile();
+    HWProfile robot           = new HWProfile();
 //        public double servoPosition = 0;
-        public double robotAngle, rightX, rightY, v1, v2, v3, v4, theta, theta2, r;
-        public int targetPosition=0;
-        public double cupPosition=robot.INTAKECUPDOWN;
+    public double robotAngle, rightX, rightY, v1, v2, v3, v4, theta, theta2, r;
+    public int targetPosition=0;
+    private LinearOpMode opMode = this;
+
+    public double cupPosition=robot.INTAKECUPDOWN;
 
 
         @Override
@@ -27,6 +30,11 @@ public class BrokenBot extends LinearOpMode{
              * The init() method of the hardware class does all the work here
              */
             robot.init(hardwareMap);
+
+            /*
+             * Initialize the drive class
+             */
+            DriveMecanum drive = new DriveMecanum(robot, opMode);
 
             // Send telemetry message to signify robot waiting;
             telemetry.addData("Say", "Hello Driver");    //
@@ -134,13 +142,28 @@ public class BrokenBot extends LinearOpMode{
 
                 robot.servoIntake.setPosition(cupPosition);
                 sleep(50);
-                robot.motorArm.setTargetPosition(targetPosition);
-                robot.motorArm.setPower(-0.5);
+//                robot.motorArm.setTargetPosition(targetPosition);
+//                robot.motorArm.setPower(-0.5);
 
                 if (gamepad2.a){
                     robot.motorIntake.setPower(1);
                 } else {
                     robot.motorIntake.setPower(0);
+                }
+
+                if(gamepad2.x){
+                    drive.setArmLevel(3);
+                    telemetry.addData("Set Arm to Level ="," 3");
+                }
+
+                if(gamepad2.left_bumper){
+                    drive.setArmLevel(2);
+                    telemetry.addData("Set Arm to Level ="," 2");
+                }
+
+                if(gamepad2.right_bumper){
+                    drive.setArmLevel(1);
+                    telemetry.addData("Set Arm to Level ="," 1");
                 }
 
                 telemetry.addData("deviceName",robot.sensorDistance.getDeviceName() );

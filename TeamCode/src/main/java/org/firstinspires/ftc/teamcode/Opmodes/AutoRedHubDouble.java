@@ -42,12 +42,13 @@ public class AutoRedHubDouble extends LinearOpMode {
         DriveMecanum drive = new DriveMecanum(robot, opMode);
 
         robot.servoIntake.setPosition(robot.INTAKECUPUP);
-        telemetry.addData("Z Value = ", drive.getZAngle());
-        telemetry.addData("Robot state = ", "INITIALIZED");
-        telemetry.update();
 
         while(!opModeIsActive() && isRunning){
+            telemetry.addData("Robot state = ", "INITIALIZED");
             telemetry.addData("PRESS X => ","TO ABORT PROGRAM");
+            telemetry.addData(" => ","");
+            telemetry.addData(" => Z Value = ", drive.getZAngle());
+            telemetry.addData(" => Distance Value = ", drive.tseDistance());
             if (robot.sensorDistance.getDistance(DistanceUnit.CM) < robot.TSEDISTANCE) {
                 telemetry.addData("TSE = ", "DETECTED");
             } else {
@@ -71,39 +72,46 @@ public class AutoRedHubDouble extends LinearOpMode {
                     if(drive.tseDistance() < robot.TSEDISTANCE) {
                         hubLevel = 2;
                         // strafe to position in front of the hub
-                        drive.driveTime(0.4, 90, 1);
-                        forwardDistance = 10;       // how far to move forward to score
+                        drive.driveTime(0.6, 90, 1.1);
+                        forwardDistance = 12;       // how far to move forward to score
                     } else {
                         // strafe to the left towards the hub, stopping to check the next position
-                        drive.driveTime(0.4, 90, 0.5);
+                        drive.driveTime(0.6, 90, 0.6);
 
                         // pause to allow time to determine if a TSE is present
-                        sleep(300);
+                        sleep(500);
                         if(drive.tseDistance() < robot.TSEDISTANCE) {
-                            hubLevel = 3;
+                            hubLevel = 1;
                             forwardDistance = 14;       // how far to move forward to score
                         } else {
-                            hubLevel = 1;
+                            hubLevel = 3;
                             forwardDistance = 10;       // how far to move forward to score
                         } // end of if(drive.tseDistance()
 
+                        telemetry.addData("distance sensed = ", drive.tseDistance());
+                        telemetry.addData("detected level = ", hubLevel);
+                        telemetry.update();
+//                        sleep(5000);
                         // strafe into position to place cube in the hub.
-                        drive.driveTime(0.4, 90, 0.5);
+                        drive.driveTime(0.6, 90, 0.6);
                     } // end of if(drive.tseDistance() else
+
+                    // drive forward to avoid hitting the wall
+                    drive.driveStraight(-0.4, 4);
 
                     drive.setArmLevel(hubLevel);
                     telemetry.addData("Set arm to Level = ", hubLevel);
                     telemetry.update();
 
                     // drive forward to position to place the cube
-                    drive.driveStraight(0.4, forwardDistance);
+                    drive.driveStraight(-0.4, forwardDistance);
 
                     // place the cube in the correct level
                     drive.dumpCup();
                     sleep(500); // wait for the block to dump
 
                     // return to the starting position
-                    drive.driveStraight(0.4, (-forwardDistance + 3));
+                    drive.driveTime(0.4, 0, 0.6);
 
                     // reset the arm to starting position
                     drive.resetArm();
@@ -122,7 +130,13 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveTurn(-88, 0.5);
 
                     // drive towards warehouse
-                    drive.driveTime(0.7, -4, 1.4);
+                    drive.driveTime(0.7, -4, 0.6);
+
+                    // strafe into the wall
+                    drive.driveTime(0.8, 90, 0.3);
+
+                    // drive towards warehouse
+                    drive.driveTime(0.7, -4, 0.8);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
@@ -146,8 +160,9 @@ public class AutoRedHubDouble extends LinearOpMode {
 
                     // assume elements captured
                     // set the cup to an upright position
-                    robot.servoIntake.setPosition(robot.INTAKECUPUP);
-                    sleep(50);
+                    robot.servoIntake.setPosition(0.8);
+//                    robot.servoIntake.setPosition(robot.INTAKECUPUP);
+                    sleep(100);
 
                     // Lift arm up
                     robot.motorArm.setTargetPosition(robot.ARMPOSITIONMID);
@@ -191,7 +206,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveTurn(-88, 0.3);
 
                     // strafe into the wall
-                    drive.driveTime(0.6, 90, 0.5);
+                    drive.driveTime(0.6, 90, 0.4);
 
                     // rotate towards warehouse
                     drive.driveTurn(-88, 0.3);
@@ -200,7 +215,13 @@ public class AutoRedHubDouble extends LinearOpMode {
                     robot.motorIntake.setPower(1);
 
                     // drive towards warehouse
-                    drive.driveTime(0.8, -2, 1.5);
+                    drive.driveTime(0.7, -4, 0.6);
+
+                    // strafe into the wall
+                    drive.driveTime(0.8, 90, 0.3);
+
+                    // drive towards warehouse
+                    drive.driveTime(0.7, -4, 0.8);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);

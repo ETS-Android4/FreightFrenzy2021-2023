@@ -41,9 +41,9 @@ public class HWProfile {
     final public int ARMPOSITIONSHARED = -1850;
     final public int ARMPOSITIONTSELOW = -1900;
     final public int ARMPOSITIONTSEHIGH = -1400;
-    final public int ARMPOSITIONLEVEL1 = -1500;
-    final public int ARMPOSITIONLEVEL2 = -1500;
-    final public int ARMPOSITIONLEVEL3 = -1500;
+    final public int ARMPOSITIONLEVEL1 = -1925;
+    final public int ARMPOSITIONLEVEL2 = -1675;
+    final public int ARMPOSITIONLEVEL3 = -1400;
 
     final public int DRIVE_TICKS_PER_INCH = 28;
 

@@ -258,7 +258,7 @@ public class DriveMecanum {
 
         robot.servoIntake.setPosition(cupPosition);
         robot.motorArm.setTargetPosition(targetPosition);
-        robot.motorArm.setPower(-0.5);
+        robot.motorArm.setPower(-0.3);
         while (robot.motorArm.getCurrentPosition() > (targetPosition + 10)) {
             if (robot.motorArm.getCurrentPosition() > -5 &&
                     robot.motorArm.getCurrentPosition() < 2) {
@@ -390,7 +390,10 @@ public class DriveMecanum {
     public void dumpCup(){
         robot.servoIntake.setPosition(robot.INTAKEHIGHDUMP);
         opMode.sleep(300);
-        robot.servoIntake.setPosition(robot.INTAKECUPHIGH);
+
+        // make cup stick out
+        robot.servoIntake.setPosition(0.6);
+//        robot.servoIntake.setPosition(robot.INTAKECUPHIGH);
     }   // end of method dumpCup()
 
     public double tseDistance (){
