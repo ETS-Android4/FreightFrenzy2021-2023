@@ -256,7 +256,7 @@ public class DriveMecanum {
             targetPosition = robot.ARMPOSITIONLEVEL3;
         } // end of if (level ==1)
 
-        robot.servoIntake.setPosition(cupPosition);
+//        robot.servoIntake.setPosition(cupPosition);
         robot.motorArm.setTargetPosition(targetPosition);
         robot.motorArm.setPower(-0.3);
         while (robot.motorArm.getCurrentPosition() > (targetPosition + 10)) {

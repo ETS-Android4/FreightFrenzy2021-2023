@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
@@ -23,6 +24,8 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
         int hubLevel = 3;
         boolean isRunning = true;
         int forwardDistance = 0;
+        ElapsedTime runtime = new ElapsedTime();
+        double startTime = 0;
 
         /*
          * Setup the initial state of the robot
@@ -63,6 +66,9 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
 
         waitForStart();
 
+        runtime.reset();
+        startTime = runtime.time();
+
         while(opModeIsActive()) {
             switch (state) {
                 case TEST:
@@ -73,20 +79,20 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     if(drive.tseDistance() < robot.TSEDISTANCE) {
                         hubLevel = 2;
                         // strafe to position in front of the hub
-                        drive.driveTime(0.5, -90, 0.6);
-                        forwardDistance = 10;       // how far to move forward to score
+                        drive.driveTime(0.5, -90, 0.7);
+                        forwardDistance = 12;       // how far to move forward to score
                     } else {
                         // strafe to the left away from the hub, stopping to check the next position
-                        drive.driveTime(0.5, -90, 0.6);
+                        drive.driveTime(0.5, -90, 0.7);
 
                         // pause to allow time to determine if a TSE is present
                         sleep(300);
                         if(drive.tseDistance() < robot.TSEDISTANCE) {
-                            hubLevel = 1;
-                            forwardDistance = 8;       // how far to move forward to score
-                        } else {
                             hubLevel = 3;
-                            forwardDistance = 10;       // how far to move forward to score
+                            forwardDistance = 14;       // how far to move forward to score
+                        } else {
+                            hubLevel = 1;
+                            forwardDistance = 14;       // how far to move forward to score
                         } // end of if(drive.tseDistance()
                     } // end of if(drive.tseDistance() else
 
@@ -94,8 +100,11 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     drive.driveStraight(-0.4, 4);
 
                     // raise the arm above the TSE to drive forward
-                    drive.setArmLevel(3);
-                    telemetry.addData("Set arm to Level = ", "3");
+                    robot.servoIntake.setPosition(robot.INTAKECUPUP);
+                    robot.motorArm.setTargetPosition(robot.ARMPOSITIONMID);
+                    robot.motorArm.setPower(0.5);
+                    sleep(500);
+                    telemetry.addData("Set arm to Level = ", "MID");
                     telemetry.update();
                     state = State.SCORE_TSE;
 
@@ -117,7 +126,7 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     sleep(500); // wait for the block to dump
 
                     // return to the starting position
-                    drive.driveTime(0.4, 0, 0.4);
+                    drive.driveTime(0.4, 0, 0.8);
 
                     // reset the arm to starting position
                     drive.resetArm();
@@ -136,26 +145,31 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     drive.driveTurn(-90, 0.3);
 
                     // strafe towards wall
-                    drive.driveTime(0.6, -90, 0.6);
+                    drive.driveTime(0.6, 90, 1.3);
 
                     // strafe away from wall
-                    drive.driveTime(0.6, 90, 0.4);
+                    drive.driveTime(0.6, -90, 0.5);
 
                     // drive towards carousel
-                    drive.driveTime(0.4, 0, 1);
+                    drive.driveTime(0.5, 0, 0.6);
 
-                    drive.motorsOn(-0.03, 0.03, -0.03, 0.03);
+                    drive.motorsOn(-0.01, 0.01, -0.01, 0.01);
 
                     // turn carousel on
                     robot.motorDuck.setPower(0.4);
                     sleep(9000);
+/*                    while((startTime - runtime.time()) < 27){
+                        // do nothing
+                    }
+
+ */
                     robot.motorDuck.setPower(0);
 
                     // correct strafe angle
                     drive.driveTurn(-90, 0.3);
 
                     // strafe to storage
-                    drive.driveTime(0.42, -90, 1.3);
+                    drive.driveTime(0.42, -90, 1.4);
                     drive.motorsHalt();
 
                     state = State.HALT;

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HWProfile.HWProfile;
+import org.firstinspires.ftc.teamcode.Libs.DataLogger;
 import org.firstinspires.ftc.teamcode.Libs.DriveMecanum;
 
 @Autonomous(name = "Blue Warehouse - STATE", group = "Competition")
@@ -16,6 +17,12 @@ public class AutoBlueHubDouble extends LinearOpMode {
     private LinearOpMode opMode = this;
     private State state = State.DETECT_TSE;
     private ElapsedTime runtime = new ElapsedTime();
+    private DataLogger Dl;
+
+    /*
+     * Initialize the drive class
+     */
+    DriveMecanum drive = new DriveMecanum(robot, opMode);
 
     public AutoBlueHubDouble() {
 
@@ -34,10 +41,6 @@ public class AutoBlueHubDouble extends LinearOpMode {
          */
         robot.init(hardwareMap);
 
-        /*
-         * Initialize the drive class
-         */
-        DriveMecanum drive = new DriveMecanum(robot, opMode);
 
         while(!opModeIsActive() && isRunning){
             telemetry.addData("Side of Field => ", "WAREHOUSE");
@@ -62,6 +65,8 @@ public class AutoBlueHubDouble extends LinearOpMode {
             }
         }   // end of while(!opModeIsActive() && isRunning)
 
+        createDl();
+
         waitForStart();
 
         // reset the runtime clock
@@ -78,7 +83,7 @@ public class AutoBlueHubDouble extends LinearOpMode {
                         hubLevel = 2;
                         // strafe to position in front of the hub
                         drive.driveTime(0.6, -90, 1.1);
-                        forwardDistance = 12;       // how far to move forward to score
+                        forwardDistance = 14;       // how far to move forward to score
                     } else {
                         // strafe to the left towards the hub, stopping to check the next position
                         drive.driveTime(0.6, -90, 0.6);
@@ -86,11 +91,11 @@ public class AutoBlueHubDouble extends LinearOpMode {
                         // pause to allow time to determine if a TSE is present
                         sleep(500);
                         if(drive.tseDistance() < robot.TSEDISTANCE) {
-                            hubLevel = 1;
+                            hubLevel = 3;
                             forwardDistance = 14;       // how far to move forward to score
                         } else {
-                            hubLevel = 3;
-                            forwardDistance = 10;       // how far to move forward to score
+                            hubLevel = 1;
+                            forwardDistance = 14;       // how far to move forward to score
                         } // end of if(drive.tseDistance()
 
                         telemetry.addData("distance sensed = ", drive.tseDistance());
@@ -231,7 +236,7 @@ public class AutoBlueHubDouble extends LinearOpMode {
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
 
-                    if(runtime.time() > 25) {
+                    if(runtime.time() > 22) {
                         state = State.HALT;
                     }
                     break;
@@ -248,6 +253,8 @@ public class AutoBlueHubDouble extends LinearOpMode {
             }   // end of the switch state
         }   // end of while opModeIsActive()
 
+        dlStop();               // stop the data logger
+
         // End the program
         requestOpModeStop();
 
@@ -256,5 +263,47 @@ public class AutoBlueHubDouble extends LinearOpMode {
     enum State {
         TEST, DETECT_TSE, RUN1, BONUS, HALT
     }   // end of enum State
+
+    /**
+     * Setup the dataLogger
+     * The dataLogger takes a set of fields defined here and sets up the file on the Android device
+     * to save them to.  We then log data later throughout the class.
+     */
+    public void createDl() {
+
+        Dl = new DataLogger("AutoMecanumSimpleTest" + runtime.time());
+        Dl.addField("runTime:       ");
+        Dl.addField("Alliance:      ");
+        Dl.addField("Gyro value:    ");
+        Dl.addField("Dist. Sensor:  ");
+        Dl.addField("LF Encoder:    ");
+        Dl.addField("LR Encoder:    ");
+        Dl.addField("RF Encoder:    ");
+        Dl.addField("RR Encoder:    ");
+        Dl.newLine();
+    }
+
+    /**
+     * Log data to the file on the phone.
+     */
+    public void logData() {
+
+        Dl.addField(String.valueOf(runtime.time()));
+        Dl.addField("Blue Alliance");
+        Dl.addField(String.valueOf(drive.getZAngle()));
+        Dl.addField(String.valueOf(robot.sensorDistance.getDistance(DistanceUnit.CM)));
+        Dl.addField(String.valueOf(robot.motorLF.getCurrentPosition()));
+        Dl.addField(String.valueOf(robot.motorLR.getCurrentPosition()));
+        Dl.addField(String.valueOf(robot.motorRF.getCurrentPosition()));
+        Dl.addField(String.valueOf(robot.motorRR.getCurrentPosition()));
+        Dl.newLine();
+    }
+
+    /**
+     * Stop the DataLogger
+     */
+    private void dlStop() {
+        Dl.closeDataLogger();
+    }
 
 }   // end of class AutoBlueStorage

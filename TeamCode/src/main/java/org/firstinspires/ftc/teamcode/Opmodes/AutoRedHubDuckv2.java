@@ -99,7 +99,10 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
                     drive.driveStraight(-0.4, 4);
 
                     // raise the arm above the TSE to drive forward
-                    drive.setArmLevel(3);
+                    robot.servoIntake.setPosition(robot.INTAKECUPUP);
+                    robot.motorArm.setTargetPosition(robot.ARMPOSITIONMID);
+                    robot.motorArm.setPower(0.5);
+                    sleep(500);
                     telemetry.addData("Set arm to Level = ", "3");
                     telemetry.update();
                     state = State.SCORE_TSE;
