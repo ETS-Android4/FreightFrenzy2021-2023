@@ -188,7 +188,7 @@ public class AutoBlueHubDouble extends LinearOpMode {
                     drive.driveTime(0.7, -90, 0.4);
 
                     // drive to scoring position
-                    drive.driveTime(0.9, 180, 1.41);
+                    drive.driveTime(0.9, 180, 1.5);
 
                     // turn off the intake
                     robot.motorIntake.setPower(0);
