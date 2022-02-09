@@ -39,9 +39,9 @@ public class MecanumTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            /*
-             * Mecanum Drive Control section
-             */
+            /*******************************************
+             ****** Mecanum Drive Control section ******
+             *******************************************/
             if (fieldCentric) {             // verify that the user hasn't disabled field centric drive
                 theta = robot.imu.getAngularOrientation().firstAngle + 90;
             } else {
@@ -81,17 +81,6 @@ public class MecanumTeleOp extends LinearOpMode {
                 robot.motorDuck.setPower(0);
             }   // end of if(gamepad1.left_bumper)
 
-/**                if(gamepad2.right_trigger>0.2){
- robot.servoIntake.setPosition(1);
- }else{
- if(robot.motorArm.getCurrentPosition()>100){
- robot.servoIntake.setPosition(0.1);
- }else{
- robot.servoIntake.setPosition(0);
- }
- }
- **/
-
             /***********************
              * Arm control presets *
              ***********************/
@@ -105,17 +94,37 @@ public class MecanumTeleOp extends LinearOpMode {
             }else if(gamepad1.dpad_left  || gamepad2.dpad_left) {
                 targetPosition = robot.ARMPOSITIONMID;
                 shippingElement = false;
-            }else if(gamepad1.dpad_up || gamepad2.dpad_up){
+            } else if(gamepad1.dpad_up || gamepad2.dpad_up){
                 targetPosition = robot.ARMPOSITIONHIGH;
-            }else if (gamepad1.right_trigger > 0.5) {
-                targetPosition = robot.ARMPOSITIONTSELOW;
+            } else if (gamepad1.right_trigger > 0.5) {
+                /***********************************************
+                 ********* ARM CONTROL FOR TSE ACTIONS *********
+                 ***********************************************/
+                if(robot.motorArm.getCurrentPosition() > robot.ARMPOSITIONTSEHIGH) {
+                    targetPosition = robot.ARMPOSITIONTSELOW;
+                } else {
+                    if(robot.motorArm.getCurrentPosition() > robot.ARMPOSITIONTSELOW) {
+                        // lower the arm
+                        targetPosition = targetPosition - 1;
+                    } else {
+                        // limit how low the arm can go
+                        targetPosition = robot.ARMPOSITIONTSELOW;
+                    }
+                }   // end of if(robot.motorArm.getCurrentPosition() >...
                 shippingElement = true;
-            }
+            } else if (gamepad1.left_trigger > 0.5){
+                if(robot.motorArm.getCurrentPosition() > robot.ARMPOSITIONTSEHIGH) {
+                    targetPosition = robot.ARMPOSITIONTSEHIGH;
+                } else {
+                    // raise the arm up in slow increments
+                    targetPosition = targetPosition + 1;
+                }   // end of if(robot.motorArm.getCurrentPosition() >...
+                shippingElement = true;
+            }   // end of if(gamepad1.dpad_down || gamepad2.dpad_down) with else statements
 
-
-            /*
-             * Arm controls
-             */
+            /***********************************************
+             ****** Arm controls for scoring elements ******
+             ***********************************************/
             if(!shippingElement) {
                 if (robot.motorArm.getCurrentPosition() > -5 &&
                         robot.motorArm.getCurrentPosition() < 2) {
@@ -157,8 +166,11 @@ public class MecanumTeleOp extends LinearOpMode {
                     cupPosition = robot.INTAKECUPSHARED;
                     telemetry.addData("currentPosition >armpositionShared + 100", "");
                 }
-            }
+            }   // end of if(!shippingElement)
 
+            /***********************************************
+             ********* Arm controls for scoring TSE ********
+             ***********************************************/
             if (shippingElement) {
                 if (robot.motorArm.getCurrentPosition() > -5 &&
                         robot.motorArm.getCurrentPosition() < 2) {
@@ -178,10 +190,15 @@ public class MecanumTeleOp extends LinearOpMode {
                     telemetry.addData("currentPosition >armpositionTSE + 100", "");
                 }
 
-            }
+            }   // end of if (shippingElement)
+
+
+            /***********************************************
+             ********* Apply cup & arm Positioning  ********
+             ***********************************************/
 
             if(gamepad1.b || gamepad2.b){
-                cupPosition = robot.INTAKEHIGHDUMP;
+                cupPosition = robot.INTAKEHIGHDUMP; // dump the cup
             }
 
             robot.servoIntake.setPosition(cupPosition);
@@ -189,41 +206,18 @@ public class MecanumTeleOp extends LinearOpMode {
             robot.motorArm.setTargetPosition(targetPosition);
             robot.motorArm.setPower(-0.5);
 
-            /**
-             if(gamepad1.dpad_down || gamepad2.dpad_down) {
-             targetPosition = 0;
-             cupPosition= 0.05;
-             } else if(gamepad1.dpad_right || gamepad2.dpad_right){
-             targetPosition = -490;
-             cupPosition = 0.25;
-             }else if(gamepad1.dpad_left || gamepad2.dpad_left) {
-             targetPosition = -1800;
-             cupPosition = -0.5;
-             }else if(gamepad1.dpad_up || gamepad2.dpad_up){
-             targetPosition = -1400;
-             cupPosition = 0.1;
-             }
-             if(gamepad1.left_bumper || gamepad2.left_bumper){
-             cupPosition = 0.1;
-             } else if(gamepad1.right_bumper || gamepad2.right_bumper){
-             cupPosition = 0.5;
-             }
-             **/
-
-            if (gamepad1.left_trigger > 0.5){
-                targetPosition = robot.ARMPOSITIONTSEHIGH;
-                shippingElement = true;
-            }
+            /***********************************************
+             ********* INTAKE CONTROL  ********
+             ***********************************************/
             if(gamepad1.a){
-                robot.motorIntake.setPower(0.75);
+                robot.motorIntake.setPower(0.75);   // Turn intake on
             } else if (gamepad1.x || gamepad2.x) {
-                robot.motorIntake.setPower(-0.75);
+                robot.motorIntake.setPower(-0.75);  // reverse intake to clear extra SE
             } else {
-                robot.motorIntake.setPower(0);
+                robot.motorIntake.setPower(0);  // turn intake off by default
             }
 
-            // make sure that button press is limited to once every 0.3 seconds
-
+            // Provide user feedback
             telemetry.addData("V1 = ", v1);
             telemetry.addData("V2 = ", v2);
             telemetry.addData("V3 = ", v3);
