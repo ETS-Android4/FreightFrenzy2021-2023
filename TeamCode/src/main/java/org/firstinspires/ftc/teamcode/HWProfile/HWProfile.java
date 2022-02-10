@@ -39,7 +39,7 @@ public class HWProfile {
     final public int ARMPOSITIONMID = -490;
     final public int ARMPOSITIONHIGH = -1400;
     final public int ARMPOSITIONSHARED = -1850;
-    final public int ARMPOSITIONTSELOW = -1900;
+    final public int ARMPOSITIONTSELOW = -2100;
     final public int ARMPOSITIONTSEHIGH = -1200;
     final public int ARMPOSITIONLEVEL1 = -1925;
     final public int ARMPOSITIONLEVEL2 = -1675;

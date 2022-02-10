@@ -105,7 +105,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 } else {
                     if(robot.motorArm.getCurrentPosition() > robot.ARMPOSITIONTSELOW) {
                         // lower the arm
-                        targetPosition = targetPosition - 1;
+                        targetPosition = targetPosition - 15;
                     } else {
                         // limit how low the arm can go
                         targetPosition = robot.ARMPOSITIONTSELOW;
@@ -117,7 +117,7 @@ public class MecanumTeleOp extends LinearOpMode {
                     targetPosition = robot.ARMPOSITIONTSEHIGH;
                 } else {
                     // raise the arm up in slow increments
-                    targetPosition = targetPosition + 1;
+                    targetPosition = targetPosition + 15;
                 }   // end of if(robot.motorArm.getCurrentPosition() >...
                 shippingElement = true;
             }   // end of if(gamepad1.dpad_down || gamepad2.dpad_down) with else statements
@@ -157,7 +157,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 }
 
                 if (robot.motorArm.getCurrentPosition() < -1150 &&
-                        robot.motorArm.getCurrentPosition() > -1200) {
+                        robot.motorArm.getCurrentPosition() > -1410) {
                     cupPosition = robot.INTAKECUPHIGH;
                     telemetry.addData("currentPosition >armpositionHigh", "");
                 }
@@ -181,7 +181,7 @@ public class MecanumTeleOp extends LinearOpMode {
 
                 if (robot.motorArm.getCurrentPosition() < -1000 &&
                         robot.motorArm.getCurrentPosition() < -1600) {
-                    cupPosition = robot.INTAKECUPTSEHIGH;
+//                    cupPosition = robot.INTAKECUPTSEHIGH;
                     telemetry.addData("currentPosition >armpositionTSEHigh + 100", "");
                 }
 
@@ -222,6 +222,7 @@ public class MecanumTeleOp extends LinearOpMode {
             telemetry.addData("V2 = ", v2);
             telemetry.addData("V3 = ", v3);
             telemetry.addData("V4 = ", v4);
+            telemetry.addData("Arm Motor Postion = ", robot.motorArm.getCurrentPosition());
             telemetry.addData("dpad_up = ", gamepad1.dpad_up);
             telemetry.addData("dpad_down = ", gamepad1.dpad_down);
             telemetry.addData("dpad_left = ", gamepad1.dpad_left);
