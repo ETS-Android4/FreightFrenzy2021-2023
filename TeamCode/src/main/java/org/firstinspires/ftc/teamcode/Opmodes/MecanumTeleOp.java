@@ -100,12 +100,12 @@ public class MecanumTeleOp extends LinearOpMode {
                 /***********************************************
                  ********* ARM CONTROL FOR TSE ACTIONS *********
                  ***********************************************/
-                if(robot.motorArm.getCurrentPosition() > robot.ARMPOSITIONTSEHIGH) {
+                if(robot.motorArm.getCurrentPosition() > robot.ARMPOSITIONMID) {
                     targetPosition = robot.ARMPOSITIONTSELOW;
                 } else {
                     if(robot.motorArm.getCurrentPosition() > robot.ARMPOSITIONTSELOW) {
                         // lower the arm
-                        targetPosition = targetPosition - 15;
+                        targetPosition = targetPosition - 20;
                     } else {
                         // limit how low the arm can go
                         targetPosition = robot.ARMPOSITIONTSELOW;
@@ -117,7 +117,7 @@ public class MecanumTeleOp extends LinearOpMode {
                     targetPosition = robot.ARMPOSITIONTSEHIGH;
                 } else {
                     // raise the arm up in slow increments
-                    targetPosition = targetPosition + 15;
+                    targetPosition = targetPosition + 20;
                 }   // end of if(robot.motorArm.getCurrentPosition() >...
                 shippingElement = true;
             }   // end of if(gamepad1.dpad_down || gamepad2.dpad_down) with else statements

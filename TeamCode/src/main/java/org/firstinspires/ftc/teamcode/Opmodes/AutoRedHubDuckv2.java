@@ -96,7 +96,7 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
                     drive.driveStraight(-0.4, 4);
 
                     // drive forward to avoid hitting the wall
-                    drive.driveStraight(-0.4, 4);
+//                    drive.driveStraight(-0.4, 4);
 
                     // raise the arm above the TSE to drive forward
                     robot.servoIntake.setPosition(robot.INTAKECUPUP);
@@ -138,7 +138,7 @@ public class AutoRedHubDuckv2 extends LinearOpMode {
                     drive.driveTurn(0, 0.3);
 
                     // strafe towards wall
-                    drive.driveTime(0.52, 90, 1.3);
+                    drive.driveTime(0.52, 90, 1.4);
 
                     // strafe away from wall
                     drive.driveTime(0.4, -90, 0.6);

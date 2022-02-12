@@ -39,15 +39,15 @@ public class HWProfile {
     final public int ARMPOSITIONMID = -490;
     final public int ARMPOSITIONHIGH = -1400;
     final public int ARMPOSITIONSHARED = -1850;
-    final public int ARMPOSITIONTSELOW = -2100;
+    final public int ARMPOSITIONTSELOW = -2200;
     final public int ARMPOSITIONTSEHIGH = -1200;
-    final public int ARMPOSITIONLEVEL1 = -1925;
-    final public int ARMPOSITIONLEVEL2 = -1675;
-    final public int ARMPOSITIONLEVEL3 = -1400;
+    final public int ARMPOSITIONLEVEL1 = -2000;
+    final public int ARMPOSITIONLEVEL2 = -1785;
+    final public int ARMPOSITIONLEVEL3 = -1500;
 
     final public int DRIVE_TICKS_PER_INCH = 28;
 
-    final public double TSEDISTANCE = 50;       // distance in CM
+    final public double TSEDISTANCE = 55;       // distance in CM
     final public double DISTANCEPERROTATION = 4; // assuming inches
 
     /* local OpMode members. */

@@ -83,7 +83,7 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                         forwardDistance = 12;       // how far to move forward to score
                     } else {
                         // strafe to the left away from the hub, stopping to check the next position
-                        drive.driveTime(0.5, -90, 0.7);
+                        drive.driveTime(0.5, -90, 0.65);
 
                         // pause to allow time to determine if a TSE is present
                         sleep(300);
@@ -148,10 +148,10 @@ public class AutoBlueHubDuckv2 extends LinearOpMode {
                     drive.driveTime(0.6, 90, 1.3);
 
                     // strafe away from wall
-                    drive.driveTime(0.6, -90, 0.5);
+                    drive.driveTime(0.5, -90, 0.55);
 
                     // drive towards carousel
-                    drive.driveTime(0.5, 0, 0.6);
+                    drive.driveTime(0.5, 0, 0.7);
 
                     drive.motorsOn(-0.01, 0.01, -0.01, 0.01);
 
