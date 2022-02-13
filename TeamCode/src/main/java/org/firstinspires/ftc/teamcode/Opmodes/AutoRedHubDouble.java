@@ -107,7 +107,11 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveStraight(-0.4, forwardDistance);
 
                     // place the cube in the correct level
-                    drive.dumpCup();
+                    if (hubLevel == 1){
+                        drive.dumpCupLow();
+                    } else {
+                        drive.dumpCup();
+                    }
                     sleep(500); // wait for the block to dump
 
                     // return to the starting position
@@ -136,13 +140,13 @@ public class AutoRedHubDouble extends LinearOpMode {
                     drive.driveTime(0.8, 90, 0.3);
 
                     // drive towards warehouse
-                    drive.driveTime(0.7, -4, 0.8);
+                    drive.driveTime(0.7, -4, 1.2);
 
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
 
                     if(opModeIsActive() && runtime.time() < 20) {
-                        state = State.BONUS;
+                        state = State.HALT;
                     } else {
                         state = State.HALT;
                     }
@@ -226,7 +230,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                     // lower the cup to intake more elements
                     robot.servoIntake.setPosition(robot.INTAKECUPDOWN);
 
-                    if(runtime.time() > 25) {
+                    if(runtime.time() > 20) {
                         state = State.HALT;
                     }
                     break;

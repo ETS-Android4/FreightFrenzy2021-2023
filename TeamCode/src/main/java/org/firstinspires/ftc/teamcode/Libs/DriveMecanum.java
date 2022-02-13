@@ -392,6 +392,18 @@ public class DriveMecanum {
         opMode.sleep(300);
 
         // make cup stick out
+        robot.servoIntake.setPosition(0.45);
+//        robot.servoIntake.setPosition(robot.INTAKECUPHIGH);
+    }   // end of method dumpCup()
+
+    /*
+     * Method dumpCup
+     */
+    public void dumpCupLow(){
+        robot.servoIntake.setPosition(robot.INTAKEHIGHDUMP);
+        opMode.sleep(300);
+
+        // make cup stick out
         robot.servoIntake.setPosition(0.6);
 //        robot.servoIntake.setPosition(robot.INTAKECUPHIGH);
     }   // end of method dumpCup()
