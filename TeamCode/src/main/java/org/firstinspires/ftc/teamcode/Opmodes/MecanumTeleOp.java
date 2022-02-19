@@ -198,7 +198,17 @@ public class MecanumTeleOp extends LinearOpMode {
              ***********************************************/
 
             if(gamepad1.b || gamepad2.b){
-                cupPosition = robot.INTAKEHIGHDUMP; // dump the cup
+                if(shippingElement) {
+                    cupPosition = robot.INTAKECUPTSEMID;
+                } else {
+                    if (robot.motorArm.getCurrentPosition() < -900) {
+                        cupPosition = robot.INTAKEHIGHDUMP; // dump the cup
+                    } else if (robot.motorArm.getCurrentPosition() < -50 &&
+                            robot.motorArm.getCurrentPosition() > -899) {
+                        cupPosition = robot.INTAKECUPSHAREDDUMP; // dump the cup
+                    }
+
+                }
             }
 
             robot.servoIntake.setPosition(cupPosition);
