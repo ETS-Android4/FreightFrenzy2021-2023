@@ -30,7 +30,7 @@ public class HWProfile {
     final public double INTAKECUPINTERMED = 0.35;
     final public double INTAKECUPHIGH = 0.17;
     final public double INTAKECUPSHARED = 0.0;
-    final public double INTAKECUPTSELOW = 0.22;
+    final public double INTAKECUPTSELOW = 0.18;
     final public double INTAKECUPTSEMID = 0.35;
     final public double INTAKECUPTSEHIGH = 0.50;
     final public double INTAKEHIGHDUMP= 0.65;

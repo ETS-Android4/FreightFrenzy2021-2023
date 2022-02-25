@@ -85,7 +85,7 @@ public class AutoRedHubDouble extends LinearOpMode {
                             forwardDistance = 14;       // how far to move forward to score
                         } else {
                             hubLevel = 3;
-                            forwardDistance = 10;       // how far to move forward to score
+                            forwardDistance = 12;       // how far to move forward to score
                         } // end of if(drive.tseDistance()
 
                         telemetry.addData("distance sensed = ", drive.tseDistance());
